@@ -1,0 +1,30 @@
+{
+   "author": "Christian Schiller",
+   "background": {
+      "scripts": [ "dict.js", "main.js", "background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "images/zhongwen48.png",
+      "default_title": "Zhongwen Chinese Popup Dictionary"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "js/jquery-1.7.1.min.js", "content.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   } ],
+   "description": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter.",
+   "icons": {
+      "128": "images/zhongwen.png",
+      "16": "images/zhongwen16.png",
+      "48": "images/zhongwen48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9kqvX6bQ05nYOOB67oitnTW6arQZbq/nLebcs8f2jwXM7cvZrkNaMtZroysYtDPFIES7yP4/SAsVP4CGKP7z/2o8/BBkqe+8+4Okk5bo23ovpGVSqGlpE63Q58Zkpl6j/GcVpHAlE5thNH7QmBjcAH5ESdt/o2iJaYDbImwthDwIDAQAB",
+   "manifest_version": 2,
+   "name": "Zhongwen: Chinese-English Dictionary",
+   "options_page": "options.html",
+   "permissions": [ "tabs", "http://*/*", "contextMenus" ],
+   "short_name": "Zhongwen",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "4.8",
+   "web_accessible_resources": [ "css/*", "js/*", "images/*" ]
+}

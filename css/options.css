@@ -1,0 +1,10 @@
+body {
+  font-size: 10pt;
+  font-family: Verdana, Tahoma, sans-serif;
+  background-color: #E6F4FF;
+}
+
+.important {
+  color: red;
+  font-weight: bold;
+}
