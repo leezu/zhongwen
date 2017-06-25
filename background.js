@@ -1,14 +1,40 @@
 /*
         Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2012 Christian Schiller
+        Original work Copyright (C) 2012 Christian Schiller
+        Modified work Copyright (C) 2017 Leonard Lausen
         https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 */
 
-chrome.browserAction.onClicked.addListener(zhongwenMain.enableToggle);
-chrome.tabs.onActiveChanged.addListener(zhongwenMain.onTabSelect);
+function initStorage(key, defaultValue) {
+  var currentValue = localStorage[key];
+  if (!currentValue) {
+    localStorage[key] = defaultValue;
+  }
+}
 
-chrome.extension.onRequest.addListener(function(request, sender, response) {
+initStorage("popupcolor", "yellow");
+initStorage("tonecolors", "yes");
+initStorage("fontSize", "small");
+initStorage("skritterTLD", "com");
+initStorage("zhuyin", "no");
+initStorage("grammar", "yes");
 
+zhongwenMain.config = {};
+zhongwenMain.config.css = localStorage["popupcolor"];
+zhongwenMain.config.tonecolors = localStorage["tonecolors"];
+zhongwenMain.config.fontSize = localStorage["fontSize"]
+zhongwenMain.config.skritterTLD = localStorage.skritterTLD;
+zhongwenMain.config.zhuyin = localStorage.zhuyin;
+zhongwenMain.config.grammar = localStorage.grammar;
+
+if (localStorage['enabled'] == 1) {
+  zhongwenMain.loadDictionary();
+  zhongwenMain.enabled = 1;
+} else {
+  zhongwenMain.enabled = 0;
+}
+
+chrome.runtime.onMessage.addListener(function(request, sender, response) {
     switch(request.type) {
         case 'enable?':
             zhongwenMain.onTabSelect(sender.tab.id);
@@ -106,31 +132,5 @@ chrome.extension.onRequest.addListener(function(request, sender, response) {
     }
 });
 
-function initStorage(key, defaultValue) {
-    var currentValue = localStorage[key];
-    if (!currentValue) {
-        localStorage[key] = defaultValue;
-    }
-}
-
-initStorage("popupcolor", "yellow");
-initStorage("tonecolors", "yes");
-initStorage("fontSize", "small");
-initStorage("skritterTLD", "com");
-initStorage("zhuyin", "no");
-initStorage("grammar", "yes");
-
-zhongwenMain.config = {};
-zhongwenMain.config.css = localStorage["popupcolor"];
-zhongwenMain.config.tonecolors = localStorage["tonecolors"];
-zhongwenMain.config.fontSize = localStorage["fontSize"]
-zhongwenMain.config.skritterTLD = localStorage.skritterTLD;
-zhongwenMain.config.zhuyin = localStorage.zhuyin;
-zhongwenMain.config.grammar = localStorage.grammar;
-
-if (localStorage['enabled'] == 1) {
-   zhongwenMain.loadDictionary();
-   zhongwenMain.enabled = 1;
-} else {
-    zhongwenMain.enabled = 0;
-}
+chrome.browserAction.onClicked.addListener(zhongwenMain.enableToggle);
+chrome.tabs.onActiveChanged.addListener(zhongwenMain.onTabSelect);
