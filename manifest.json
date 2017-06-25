@@ -1,5 +1,5 @@
 {
-   "author": "Christian Schiller",
+   "author": "Christian Schiller, Leonard Lausen",
    "background": {
       "scripts": [ "dict.js", "main.js", "background.js" ]
    },
@@ -12,17 +12,18 @@
       "js": [ "js/jquery-1.7.1.min.js", "content.js" ],
       "matches": [ "\u003Call_urls>" ]
    } ],
-   "description": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter.",
+   "description": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter. Firefox fork of the Christian Schillers Chrome extension.",
    "icons": {
       "128": "images/zhongwen.png",
       "16": "images/zhongwen16.png",
       "48": "images/zhongwen48.png"
    },
+  "homepage_url": "https://github.com/leezu/zhongwen",
    "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9kqvX6bQ05nYOOB67oitnTW6arQZbq/nLebcs8f2jwXM7cvZrkNaMtZroysYtDPFIES7yP4/SAsVP4CGKP7z/2o8/BBkqe+8+4Okk5bo23ovpGVSqGlpE63Q58Zkpl6j/GcVpHAlE5thNH7QmBjcAH5ESdt/o2iJaYDbImwthDwIDAQAB",
    "manifest_version": 2,
    "name": "Zhongwen: Chinese-English Dictionary",
    "options_page": "options.html",
-   "permissions": [ "tabs", "http://*/*", "contextMenus" ],
+   "permissions": [ "tabs", "*://*/*", "contextMenus" ],
    "short_name": "Zhongwen",
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "4.8",
