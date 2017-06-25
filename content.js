@@ -820,9 +820,15 @@ var zhongwenContent = {
         tdata.clientX = ev.clientX;
         tdata.clientY = ev.clientY;
 
-        var range = document.caretRangeFromPoint(ev.clientX, ev.clientY);
-        var rp = range.startContainer;
-        var ro = range.startOffset;
+        if (document.caretPositionFromPoint) {
+          range = document.caretPositionFromPoint(ev.clientX, ev.clientY);
+          rp = range.offsetNode;
+          ro = range.offset;
+        } else if (document.caretRangeFromPoint) {
+          range = document.caretRangeFromPoint(ev.clientX, ev.clientY);
+          rp = range.startContainer;
+          ro = range.startOffset;
+        }
 
         if (ev.target == tdata.prevTarget) {
             if ((rp == tdata.prevRangeNode) && (ro == tdata.prevRangeOfs)) return;
