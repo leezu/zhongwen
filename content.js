@@ -1,7 +1,9 @@
 /*
         Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
+        Original work Copyright (C) 2012 Christian Schiller
         https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Modified work Copyright (C) 2017 Leonard Lausen
+        https://github.com/leezu/zhongwen
 
         ---
 
@@ -70,7 +72,7 @@ var zhongwenContent = {
     
     onDOMNodeInserted: function(ev) {
         if (ev.target.nodeName == 'IFRAME') {
-            chrome.extension.sendRequest({
+            chrome.runtime.sendMessage({
                 "type": "iframe"
             });
         }
@@ -279,7 +281,7 @@ var zhongwenContent = {
         }
 
         if (ev.altKey && (ev.keyCode == 87)) {  // Alt+W
-            chrome.extension.sendRequest({
+            chrome.runtime.sendMessage({
                 type: 'open',
                 tabType: 'wordlist',
                 url: '/wordlist.html'
@@ -334,7 +336,7 @@ var zhongwenContent = {
                     // http://resources.allsetlearning.com/chinese/grammar/%E4%B8%AA
                     var allset = 'http://resources.allsetlearning.com/chinese/grammar/' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: allset
                     });
@@ -372,7 +374,7 @@ var zhongwenContent = {
                     entries.push(entry);
                 }
                 
-                chrome.extension.sendRequest({
+                chrome.runtime.sendMessage({
                     "type": "add",
                     "entries": entries
                 });
@@ -398,7 +400,7 @@ var zhongwenContent = {
                     '&rdng=' + encodeURIComponent(this.lastFound[0][4]) +
                     '&defn=' + encodeURIComponent(this.lastFound[0][3]);
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         tabType: 'skritter',
                         url: skritter
@@ -414,7 +416,7 @@ var zhongwenContent = {
                     // http://tatoeba.org/eng/sentences/search?from=cmn&to=eng&query=%E8%BF%9B%E8%A1%8C
                     var tatoeba = 'http://tatoeba.org/eng/sentences/search?from=cmn&to=eng&query=' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: tatoeba
                     });
@@ -440,7 +442,7 @@ var zhongwenContent = {
                     // http://www.nciku.com/search/all/%E4%B8%AD
                     var nciku = 'http://www.nciku.com/search/all/' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: nciku
                     });
@@ -454,7 +456,7 @@ var zhongwenContent = {
                     // http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=%E4%B8%AD
                     var yellow = 'http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: yellow
                     });
@@ -468,7 +470,7 @@ var zhongwenContent = {
                     // http://dict.cn/%E7%BF%BB%E8%AF%91
                     var dictcn = 'http://dict.cn/' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: dictcn
                     });
@@ -482,7 +484,7 @@ var zhongwenContent = {
                     // http://www.iciba.com/%E4%B8%AD%E9%A4%90
                     var iciba = 'http://www.iciba.com/' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: iciba
                     });
@@ -496,7 +498,7 @@ var zhongwenContent = {
                     // http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=%E6%B0%B4
                     var mdbg = 'http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: mdbg
                     });
@@ -510,7 +512,7 @@ var zhongwenContent = {
                     // http://jukuu.com/show-%E8%AF%8D%E5%85%B8-0.html
                     var jukuu = 'http://jukuu.com/show-' + sel + '-0.html';
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: jukuu
                     });
@@ -524,7 +526,7 @@ var zhongwenContent = {
                     // https://www.moedict.tw/~%E4%B8%AD%E6%96%87
                     var moedict = 'https://www.moedict.tw/~' + sel;
 
-                    chrome.extension.sendRequest({
+                    chrome.runtime.sendMessage({
                         type: 'open',
                         url: moedict
                     });
@@ -658,7 +660,7 @@ var zhongwenContent = {
 
         lastSelEnd = selEndList;
         lastRo = ro;
-        chrome.extension.sendRequest({
+        chrome.runtime.sendMessage({
             "type": "search",
             "text": text
         },
@@ -918,7 +920,7 @@ var zhongwenContent = {
     },
 
     copyToClipboard : function(data) {
-        chrome.extension.sendRequest({
+        chrome.runtime.sendMessage({
             "type": "copy",
             "data": data
         });
@@ -1519,7 +1521,7 @@ var zhongwenContent = {
 }
 
 //Event Listeners
-chrome.extension.onRequest.addListener(
+chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         switch(request.type) {
             case 'enable':
@@ -1540,6 +1542,6 @@ chrome.extension.onRequest.addListener(
     );
 
 // When a page first loads, checks to see if it should enable script
-chrome.extension.sendRequest({
+chrome.runtime.sendMessage({
     "type": "enable?"
 });

@@ -1,7 +1,9 @@
 /*
         Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
+        Original Work Copyright (C) 2011 Christian Schiller
         https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Modified work Copyright (C) 2017 Leonard Lausen
+        https://github.com/leezu/zhongwen
 
         ---
 
@@ -107,7 +109,7 @@ var zhongwenMain = {
     },
     _onTabSelect: function(tabId) {
         if ((this.enabled == 1))
-            chrome.tabs.sendRequest(tabId, {
+            chrome.tabs.sendMessage(tabId, {
                 "type":"enable",
                 "config":zhongwenMain.config
             });
@@ -122,13 +124,13 @@ var zhongwenMain = {
         }
 
         // Send message to current tab to add listeners and create stuff
-        chrome.tabs.sendRequest(tab.id, {
+        chrome.tabs.sendMessage(tab.id, {
             "type": "enable",
             "config": zhongwenMain.config
         });
         zhongwenMain.enabled = 1;
 
-        chrome.tabs.sendRequest(tab.id, {
+        chrome.tabs.sendMessage(tab.id, {
             "type": "showPopup",
             "text": zhongwenMain.miniHelp,
             "isHelp": true
@@ -137,11 +139,11 @@ var zhongwenMain = {
         chrome.browserAction.setBadgeBackgroundColor({
             "color": [255, 0, 0, 255]
         });
-        
+
         chrome.browserAction.setBadgeText({
             "text": "On"
         });
-        
+
         chrome.contextMenus.create(
         {
             title: "Open word list",
@@ -200,7 +202,7 @@ var zhongwenMain = {
             for (var i =0; i < windows.length; ++i) {
                 var tabs = windows[i].tabs;
                 for ( var j = 0; j < tabs.length; ++j) {
-                    chrome.tabs.sendRequest(tabs[j].id, {
+                    chrome.tabs.sendMessage(tabs[j].id, {
                         "type":"disable"
                     });
                 }
