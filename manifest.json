@@ -23,7 +23,7 @@
    "manifest_version": 2,
    "name": "Zhongwen: Chinese-English Dictionary",
    "options_page": "options.html",
-   "permissions": [ "tabs", "*://*/*", "contextMenus" ],
+   "permissions": [ "*://*/*", "contextMenus" ],
    "short_name": "Zhongwen",
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "4.8",
