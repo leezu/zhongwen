@@ -771,10 +771,10 @@ var zhongwenContent = {
         div.scrollLeft = input.scrollLeft;
         div.style.position = "absolute";
         div.style.zIndex = 7000;
-        $(div).offset({
-            top: $(input).offset().top,
-            left: $(input).offset().left
-        });
+
+        var rect = input.getBoundingClientRect();
+        div.style.top = rect.top + document.body.scrollTop + "px";
+        div.style.left = rect.left + document.body.scrollLeft + "px";
 
         return div;
     },
