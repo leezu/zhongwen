@@ -109,7 +109,7 @@ var zhongwenContent = {
         return null;
     },
 
-    showPopup: function(text, elem, x, y, looseWidth) {
+    showPopup: function(fragment, elem, x, y, looseWidth) {
         var topdoc = window.document;
 
         if (!x || !y) x = y = 0;
@@ -135,25 +135,16 @@ var zhongwenContent = {
                     zhongwenContent.hidePopup();
                     ev.stopPropagation();
                 }, true);
+        } else {
+            while (popup.hasChildNodes()) {
+                popup.removeChild(popup.firstChild);
+            }
         }
 
         popup.style.width = 'auto';
         popup.style.height = 'auto';
         popup.style.maxWidth = (looseWidth ? '' : '600px');
-
-        if (zhongwenContent.getContentType(topdoc) == 'text/plain') {
-            var df = document.createDocumentFragment();
-            df.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'span'));
-            df.firstChild.innerHTML = text;
-
-            while (popup.firstChild) {
-                popup.removeChild(popup.firstChild);
-            }
-            popup.appendChild(df.firstChild);
-        }
-        else {
-            popup.innerHTML = text;
-        }
+        popup.appendChild(fragment);
 
         if (elem) {
             popup.style.top = '-1000px';
@@ -246,7 +237,9 @@ var zhongwenContent = {
         var popup = document.getElementById('zhongwen-window');
         if (popup) {
             popup.style.display = 'none';
-            popup.innerHTML = '';
+            while (popup.hasChildNodes()) {
+                popup.removeChild(popup.firstChild);
+            }
         }
     },
 
@@ -363,7 +356,7 @@ var zhongwenContent = {
                 break;
 
             case 82:        // r
-                
+
                 var entries = [];
                 for (var j = 0; j < this.lastFound.length; j++) {
                     var entry = {};
@@ -373,21 +366,31 @@ var zhongwenContent = {
                     entry.definition = this.lastFound[j][3];
                     entries.push(entry);
                 }
-                
+
                 chrome.runtime.sendMessage({
                     "type": "add",
                     "entries": entries
                 });
-                
-                this.showPopup("Added to word list.<p>Press Alt+W to open word list.", null, -1, -1);
+
+                var fragment = document.createDocumentFragment();
+                var p1 = document.createElement("p");
+                var p1text = document.createTextNode("Added to word list.");
+                p1.appendChild(p1text);
+                var p2 = document.createElement("p");
+                var p2text = document.createTextNode("Press Alt+W to open word list.");
+                p2.appendChild(p2text);
+                fragment.appendChild(p1);
+                fragment.appendChild(p2);
+
+                this.showPopup(fragment, null, -1, -1);
 
                 break;
-                
+
             case 83:        // s
                 if (this.isVisible()) {
 
                     // http://www.skritter.com/vocab/api/add?from=Chrome&lang=zh&word=浏览&trad=瀏 覽&rdng=liú lǎn&defn=to skim over; to browse
-                
+
                     var skritter = 'http://legacy.skritter.com';
                     if (window.zhongwen.config.skritterTLD == 'cn') {
                         skritter = 'http://legacy.skritter.cn';
@@ -671,6 +674,7 @@ var zhongwenContent = {
     },
 
     processEntry: function(e) {
+      // Object { data: Array[2], matchLen: 2 }
 
         var tdata = window.zhongwen;
 
@@ -701,12 +705,12 @@ var zhongwenContent = {
             tdata.prevSelView = doc.defaultView;
         }
 
-        zhongwenContent.processHtml(zhongwenContent.makeHtml(e, window.zhongwen.config.tonecolors != 'no'));
+        zhongwenContent.processFragment(zhongwenContent.makeFragment(e, window.zhongwen.config.tonecolors != 'no'));
     },
 
-    processHtml: function(html) {
+    processFragment: function(fragment) {
         var tdata = window.zhongwen;
-        zhongwenContent.showPopup(html, tdata.prevTarget, tdata.popX, tdata.popY, false);
+        zhongwenContent.showPopup(fragment, tdata.prevTarget, tdata.popX, tdata.popY, false);
         return 1;
     },
 
@@ -751,16 +755,16 @@ var zhongwenContent = {
 
     makeDiv: function(input) {
         var div = document.createElement('div');
-        
+
         div.id = '_zhongwenDiv';
-        
+
         var text;
         if (input.value) {
             text = input.value;
         }  else {
             text = '';
         }
-        div.innerHTML = text;
+        div.textContent = text;
 
         div.style.cssText = document.defaultView.getComputedStyle(input, "").cssText;
         div.scrollTop = input.scrollTop;
@@ -768,10 +772,10 @@ var zhongwenContent = {
         div.style.position = "absolute";
         div.style.zIndex = 7000;
         $(div).offset({
-            top: $(input).offset().top, 
+            top: $(input).offset().top,
             left: $(input).offset().left
-        })
-		
+        });
+
         return div;
     },
 
@@ -788,23 +792,23 @@ var zhongwenContent = {
             var div = document.getElementById('_zhongwenDiv');
 
             if (ev.altKey) {
-                
+
                 if (!div && (ev.target.nodeName == 'TEXTAREA' || ev.target.nodeName == 'INPUT' ||
                     ev.target.nodeName == 'IFRAME')) {
-                
+
                     div = zhongwenContent.makeDiv(ev.target);
                     document.body.appendChild(div);
                     div.scrollTop = ev.target.scrollTop;
                     div.scrollLeft = ev.target.scrollLeft;
-                
+
                 }
-                
+
             } else {
-                
+
                 if (div) {
                     document.body.removeChild(div);
                 }
-                
+
             }
 
         }
@@ -928,16 +932,20 @@ var zhongwenContent = {
             "data": data
         });
 
-        this.showPopup("Copied to clipboard", null, -1, -1);
+        var fragment = document.createDocumentFragment();
+        var p = document.createElement("p");
+        var ptext = document.createTextNode("Copied to clipboard.");
+        p.appendChild(ptext);
+        fragment.appendChild(p);
+        this.showPopup(fragment, null, -1, -1);
     },
 
-    makeHtml: function(entry, showToneColors) {
-
+    makeFragment: function(entry, showToneColors) {
         var e;
-        var html = '';
         var texts = [];
+        var fragment = document.createDocumentFragment();
 
-        if (entry == null) return '';
+      if (entry == null) return fragment;
 
         for (var i = 0; i < entry.data.length; ++i) {
             e = entry.data[i][0].match(/^([^\s]+?)\s+([^\s]+?)\s+\[(.*?)\]?\s*\/(.+)\//);
@@ -949,9 +957,15 @@ var zhongwenContent = {
             if (window.zhongwen.config.fontSize == 'small') {
                 hanziClass += '-small';
             }
-            html += '<span class="' + hanziClass + '">' + e[2] + '</span>&nbsp;';
+            var hanziSpan = document.createElement('span');
+            hanziSpan.textContent = e[2];
+            hanziSpan.className = hanziClass;
+            fragment.appendChild(hanziSpan);
             if (e[1] != e[2]) {
-                html += '<span class="' + hanziClass + '">' + e[1] + '</span>&nbsp;';
+                var hanziSpan2 = document.createElement('span');
+                hanziSpan2.textContent = e[1];
+                hanziSpan2.className = hanziClass;
+                fragment.appendChild(hanziSpan2);
             }
 
             // Pinyin
@@ -961,12 +975,13 @@ var zhongwenContent = {
                 pinyinClass += '-small';
             }
             var p = this.pinyinAndZhuyin(e[3], showToneColors, pinyinClass);
-            html += p[0];
+            fragment.appendChild(p[0]);
 
             // Zhuyin
 
             if (window.zhongwen.config.zhuyin == 'yes') {
-                html += '<br>' + p[2];
+                fragment.appendChild(document.createElement('br'));
+                fragment.appendChild(p[2]);
             }
 
             // Definition
@@ -976,34 +991,42 @@ var zhongwenContent = {
                 defClass += '-small';
             }
             var translation = e[4].replace(/\//g, '; ');
-            html += '<br><span class="' + defClass + '">' + translation + '</span><br>';
+
+            var defSpan = document.createElement('span');
+            defSpan.textContent = translation;
+            defSpan.className = defClass;
+            fragment.appendChild(document.createElement('br'));
+            fragment.appendChild(defSpan);
+            fragment.appendChild(document.createElement('br'));
 
             // Grammar
-            if (window.zhongwen.config.grammar != 'no' && entry.grammar && entry.grammar.index == i) {
-                html += '<br><span class="grammar">Press "g" for grammar and usage notes.</span><br><br>'
+            if (window.zhongwen.config.grammar != 'no' &&
+                  entry.grammar && entry.grammar.index == i) {
+                var grammarSpan = document.createElement('span');
+                grammarSpan.textContent = 'Press "g" for grammar and usage notes.';
+                grammarSpan.className = 'grammar';
+                fragment.appendChild(document.createElement('br'));
+                fragment.appendChild(grammarSpan);
+                fragment.appendChild(document.createElement('br'));
+                fragment.appendChild(document.createElement('br'));
             }
 
             texts[i] = [e[2], e[1], p[1], translation, e[3]];
         }
         if (entry.more) {
-            html += '&hellip;<br/>';
+            var moreSpan = document.createElement('span');
+            moreSpan.textContent = '…';
+            fragment.appendChild(moreSpan);
+            fragment.appendChild(document.createElement('br'));
         }
 
         this.lastFound = texts;
         this.lastFound.grammar = entry.grammar;
 
-        return html;
+        return fragment;
     },
 
     tones : {
-        1 : '&#772;',
-        2 : '&#769;',
-        3: '&#780;',
-        4: '&#768;',
-        5: ''
-    },
-
-    utones : {
         1 : '\u0304',
         2 : '\u0301',
         3 : '\u030C',
@@ -1017,98 +1040,101 @@ var zhongwenContent = {
     },
 
     tonify: function(vowels, tone) {
-        var html = '';
         var text = '';
 
         if (vowels == 'ou') {
-            html = 'o' + this.tones[tone] + 'u';
-            text = 'o' + this.utones[tone] + 'u'
+            text = 'o' + this.tones[tone] + 'u';
         } else {
             var tonified = false;
             for (var i = 0; i < vowels.length; i++) {
                 var c = vowels.charAt(i);
-                html += c;
                 text += c;
                 if (c == 'a' || c == 'e') {
-                    html += this.tones[tone];
-                    text += this.utones[tone];
+                    text += this.tones[tone];
                     tonified = true;
                 } else if ((i == vowels.length - 1) && !tonified) {
-                    html += this.tones[tone];
-                    text += this.utones[tone];
+                    text += this.tones[tone];
                     tonified = true;
                 }
             }
-            html = html.replace(/u:/, '&uuml;');
             text = text.replace(/u:/, '\u00FC');
         }
 
-        return [html, text];
+        return text;
     },
 
     pinyinAndZhuyin: function(syllables, showToneColors, pinyinClass) {
         var text = '';
-        var html = ''
-        var zhuyin = '';
+        var fragment = document.createDocumentFragment();
+        var zhuyinFragment = document.createDocumentFragment();
         var a = syllables.split(/[\s·]+/);
         for (var i = 0; i < a.length; i++) {
             var syllable = a[i];
-            
+
+            var span = document.createElement('span');
+            var zhuyinSpan = document.createElement('span');
+
             // ',' in pinyin
             if (syllable == ',') {
-                html += ' ,';
+                span.textContent += ' ,';
                 text += ' ,';
+                zhuyinSpan.textContent += ' ,';
                 continue;
             }
-            
+
             if (i > 0) {
-                html += '&nbsp;';
+                span.textContent += ' ';
                 text += ' ';
-                zhuyin += '&nbsp;'
+                zhuyinSpan.textContent += ' ';
             }
+
+            span.className = pinyinClass;
+
             if (syllable == 'r5') {
                 if (showToneColors) {
-                    html += '<span class="' + pinyinClass + ' tone5">r</span>';
-                } else {
-                    html += '<span class="' + pinyinClass + '">r</span>';
+                    span.className += ' tone5';
                 }
+                span.textContent += "r";
                 text += 'r';
+                fragment.appendChild(span);
                 continue;
             }
             if (syllable == 'xx5') {
                 if (showToneColors) {
-                    html += '<span class="' + pinyinClass + ' tone5">??</span>';
-                } else {
-                    html += '<span class="' + pinyinClass + '">??</span>';
+                    span.className += ' tone5';
                 }
+                span.textContent += "??";
                 text += '??';
+                fragment.appendChild(span);
                 continue;
             }
+
             var m = this.parse(syllable);
             if (showToneColors) {
-                html += '<span class="' + pinyinClass + ' tone' + m[4] + '">';
-            } else {
-                html += '<span class="' + pinyinClass + '">';
+                span.className += ' tone' + m[4];
             }
+
             var t = this.tonify(m[2], m[4]);
-            html += m[1] + t[0] + m[3];
-            html += '</span>';
-            text += m[1] + t[1] + m[3];
-            
+            span.textContent += m[1] + t + m[3];
+            text += m[1] + t + m[3];
+            fragment.appendChild(span);
+
             var zhuyinClass = 'w-zhuyin';
             if (window.zhongwen.config.fontSize == 'small') {
                 zhuyinClass += '-small';
             }
-            
-            zhuyin += '<span class="tone' + m[4] + ' ' + zhuyinClass + '">' 
-            + this.zhuyinMap[syllable.substring(0, syllable.length -1).toLowerCase()] 
-            + this.zhuyinTones[syllable[syllable.length - 1]] + '</span>'
+
+            zhuyinSpan.className = zhuyinClass + ' tone' + m[4];
+            zhuyinSpan.textContent +=
+              this.zhuyinMap[syllable.substring(0, syllable.length -1).toLowerCase()]
+              + this.zhuyinTones[syllable[syllable.length - 1]] + '</span>';
+            zhuyinFragment.appendChild(zhuyinSpan);
         }
-        return [html, text, zhuyin]
+        return [fragment, text, zhuyinFragment];
     },
-    
+
     zhuyinTones : ['?', '', '\u02CA', '\u02C7', '\u02CB', '\u30FB'],
-    
+
     zhuyinMap : {
         'a': '\u311a',
         'ai': '\u311e',
@@ -1520,7 +1546,43 @@ var zhongwenContent = {
         'zui': '\u3117\u3128\u311f',
         'zun': '\u3117\u3128\u3123',
         'zuo': '\u3117\u3128\u311b'
-    }
+    },
+
+    miniHelp:
+    '<span style="font-weight: bold;">Zhongwen Chinese-English Dictionary&nbsp;&nbsp;&nbsp;</span><br><br>' +
+    '<p>' +
+    '<span style="font-style: italic; font-weight: bold;">New: </span>' +
+    '<span style="font-style: italic;">In order to make Zhongwen work in input fields and text areas,<br>' +
+    ' hold down the Alt-key on your keyboard.</span><br><br>' +
+    '<p>' +
+    'Keyboard shortcuts:' +
+    '<p>' +
+    '<table style="margin: 20px;" cellspacing=5 cellpadding=5>' +
+    '<tr><td><b>N&nbsp;:</b></td><td>&nbsp;Next word</td></tr>' +
+    '<tr><td><b>B&nbsp;:</b></td><td>&nbsp;Previous character</td></tr>' +
+    '<tr><td><b>M&nbsp;:</b></td><td>&nbsp;Next character</td></tr>' +
+    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+    '<tr><td><b>A&nbsp;:</b></td><td>&nbsp;Alternate popup location</td></tr>' +
+    '<tr><td><b>Y&nbsp;:</b></td><td>&nbsp;Move popup location down</td></tr>' +
+    '<tr><td><b>X&nbsp;:</b></td><td>&nbsp;Move popup location up</td></tr>' +
+    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+    '<tr><td><b>C&nbsp;:</b></td><td>&nbsp;Copy to clipboard</td></tr>' +
+    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+    '<tr><td><b>S&nbsp;:</b></td><td>&nbsp;Add word to Skritter queue</td></tr>' +
+    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+    '<tr><td><b>R&nbsp;:</b></td><td>&nbsp;Remember word by adding it to the internal word list</td></tr>' +
+    '<tr><td><b>Alt + W&nbsp;:</b></td><td>&nbsp;Show the word list</td></tr>' +
+    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+    '<tr><td colspan=2>Look up selected text in online resource:</td></tr>' +
+    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+    '<tr><td><b>Alt + 1&nbsp;:</b></td><td>&nbsp;nciku</td></tr>' +
+    '<tr><td><b>Alt + 2&nbsp;:</b></td><td>&nbsp;YellowBridge</td></tr>' +
+    '<tr><td><b>Alt + 3&nbsp;:</b></td><td>&nbsp;Dict.cn</td></tr>' +
+    '<tr><td><b>Alt + 4&nbsp;:</b></td><td>&nbsp;iCIBA</td></tr>' +
+    '<tr><td><b>Alt + 5&nbsp;:</b></td><td>&nbsp;MDBG</td></tr>' +
+    '<tr><td><b>Alt + 6&nbsp;:</b></td><td>&nbsp;JuKuu</td></tr>' +
+    '<tr><td><b>T&nbsp;:</b></td><td>&nbsp;Tatoeba</td></tr>' +
+    '</table>'
 }
 
 //Event Listeners
@@ -1536,7 +1598,9 @@ chrome.runtime.onMessage.addListener(
                 break;
             case 'showPopup':
                 if (!request.isHelp || window == window.top) { 
-                    zhongwenContent.showPopup(request.text);
+                    var range = document.createRange();
+                    var helpFragment = range.createContextualFragment(zhongwenContent.miniHelp);
+                    zhongwenContent.showPopup(helpFragment);
                 }
                 break;
             default:

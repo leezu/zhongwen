@@ -52,42 +52,6 @@ var zhongwenMain = {
 
     tabIDs: {},
 
-    miniHelp:
-    '<span style="font-weight: bold;">Zhongwen Chinese-English Dictionary&nbsp;&nbsp;&nbsp;</span><br><br>' +
-    '<p>' +
-    '<span style="font-style: italic; font-weight: bold;">New: </span>' + 
-    '<span style="font-style: italic;">In order to make Zhongwen work in input fields and text areas,<br>' + 
-    ' hold down the Alt-key on your keyboard.</span><br><br>' +
-    '<p>' +
-    'Keyboard shortcuts:' +
-    '<p>' +
-    '<table style="margin: 20px;" cellspacing=5 cellpadding=5>' +
-    '<tr><td><b>N&nbsp;:</b></td><td>&nbsp;Next word</td></tr>' +
-    '<tr><td><b>B&nbsp;:</b></td><td>&nbsp;Previous character</td></tr>' +
-    '<tr><td><b>M&nbsp;:</b></td><td>&nbsp;Next character</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>A&nbsp;:</b></td><td>&nbsp;Alternate popup location</td></tr>' +
-    '<tr><td><b>Y&nbsp;:</b></td><td>&nbsp;Move popup location down</td></tr>' +
-    '<tr><td><b>X&nbsp;:</b></td><td>&nbsp;Move popup location up</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>C&nbsp;:</b></td><td>&nbsp;Copy to clipboard</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>S&nbsp;:</b></td><td>&nbsp;Add word to Skritter queue</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>R&nbsp;:</b></td><td>&nbsp;Remember word by adding it to the internal word list</td></tr>' +
-    '<tr><td><b>Alt + W&nbsp;:</b></td><td>&nbsp;Show the word list</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td colspan=2>Look up selected text in online resource:</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>Alt + 1&nbsp;:</b></td><td>&nbsp;nciku</td></tr>' +
-    '<tr><td><b>Alt + 2&nbsp;:</b></td><td>&nbsp;YellowBridge</td></tr>' +
-    '<tr><td><b>Alt + 3&nbsp;:</b></td><td>&nbsp;Dict.cn</td></tr>' +
-    '<tr><td><b>Alt + 4&nbsp;:</b></td><td>&nbsp;iCIBA</td></tr>' +
-    '<tr><td><b>Alt + 5&nbsp;:</b></td><td>&nbsp;MDBG</td></tr>' +
-    '<tr><td><b>Alt + 6&nbsp;:</b></td><td>&nbsp;JuKuu</td></tr>' +
-    '<tr><td><b>T&nbsp;:</b></td><td>&nbsp;Tatoeba</td></tr>' +
-    '</table>',
-
     loadDictionary: function() {
         if (!this.dict) {
             try {
@@ -132,7 +96,6 @@ var zhongwenMain = {
 
         chrome.tabs.sendMessage(tab.id, {
             "type": "showPopup",
-            "text": zhongwenMain.miniHelp,
             "isHelp": true
         });
 
