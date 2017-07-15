@@ -65,15 +65,14 @@ var zhongwenMain = {
         return true;
     },
 
-    // The callback for onSelectionChanged.
-    // Just sends a message to the tab to enable itself if it hasn't
-    // already.
-    onTabSelect: function(tabId) {
-        zhongwenMain._onTabSelect(tabId);
+    // The callback for onActivated.
+    // Just sends a message to the tab to enable itself if it hasn't already.
+    onTabSelect: function(activeInfo) {
+        zhongwenMain._onTabSelect(activeInfo);
     },
-    _onTabSelect: function(tabId) {
+    _onTabSelect: function(activeInfo) {
         if ((this.enabled == 1))
-            chrome.tabs.sendMessage(tabId, {
+            chrome.tabs.sendMessage(activeInfo.tabId, {
                 "type":"enable",
                 "config":zhongwenMain.config
             });
