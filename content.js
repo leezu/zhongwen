@@ -757,10 +757,7 @@ var zhongwenContent = {
         var text;
         if (input.value) {
             text = input.value;
-        } else if (input.nodeName == 'IFRAME') {
-            // gmail
-            text = $(input.contentDocument).find('body').html();
-        } else {
+        }  else {
             text = '';
         }
         div.innerHTML = text;
