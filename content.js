@@ -819,6 +819,7 @@ var zhongwenContent = {
         tdata.clientY = ev.clientY;
 
         var range = document.caretRangeFromPoint(ev.clientX, ev.clientY);
+        if (range == null) return;
         var rp = range.startContainer;
         var ro = range.startOffset;
 

@@ -1,6 +1,6 @@
 Zhongwen - A Chinese Popup Dictionary
 
-Copyright (C) 2010-2016 Christian Schiller
+Copyright (C) 2010-2017 Christian Schiller
 
 https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
