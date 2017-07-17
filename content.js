@@ -823,10 +823,12 @@ var zhongwenContent = {
 
         if (document.caretPositionFromPoint) {
           range = document.caretPositionFromPoint(ev.clientX, ev.clientY);
+          if (range == null) return;
           rp = range.offsetNode;
           ro = range.offset;
         } else if (document.caretRangeFromPoint) {
           range = document.caretRangeFromPoint(ev.clientX, ev.clientY);
+          if (range == null) return;
           rp = range.startContainer;
           ro = range.startOffset;
         }

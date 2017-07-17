@@ -9,7 +9,7 @@
    },
    "content_scripts": [ {
       "all_frames": true,
-      "js": [ "js/jquery-3.2.1.slim.min.js", "content.js" ],
+      "js": [ "js/jquery-3.2.1.min.js", "js/jquery-migrate-1.4.1.min.js", "content.js" ],
       "matches": [ "\u003Call_urls>" ]
    } ],
    "description": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter. Firefox fork of the Christian Schillers Chrome extension.",
@@ -26,6 +26,6 @@
    "permissions": [ "*://*/*", "contextMenus" ],
    "short_name": "Zhongwen",
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "4.8.3",
+   "version": "4.9.1",
    "web_accessible_resources": [ "css/*", "js/*", "images/*" ]
 }
