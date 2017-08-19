@@ -4,29 +4,6 @@
         Modified work Copyright (C) 2017 Leonard Lausen
         https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 */
-
-function initStorage(key, defaultValue) {
-  var currentValue = localStorage[key];
-  if (!currentValue) {
-    localStorage[key] = defaultValue;
-  }
-}
-
-initStorage("popupcolor", "yellow");
-initStorage("tonecolors", "yes");
-initStorage("fontSize", "small");
-initStorage("skritterTLD", "com");
-initStorage("zhuyin", "no");
-initStorage("grammar", "yes");
-
-zhongwenMain.config = {};
-zhongwenMain.config.css = localStorage["popupcolor"];
-zhongwenMain.config.tonecolors = localStorage["tonecolors"];
-zhongwenMain.config.fontSize = localStorage["fontSize"]
-zhongwenMain.config.skritterTLD = localStorage.skritterTLD;
-zhongwenMain.config.zhuyin = localStorage.zhuyin;
-zhongwenMain.config.grammar = localStorage.grammar;
-
 if (localStorage['enabled'] == 1) {
   zhongwenMain.loadDictionary();
   zhongwenMain.enabled = 1;

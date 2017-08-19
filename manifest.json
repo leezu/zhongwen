@@ -27,9 +27,15 @@
      "browser_style": true,
      "chrome_style": true
    },
-   "permissions": [ "*://*/*", "contextMenus" ],
+  "permissions": [ "*://*/*", "contextMenus", "storage" ],
    "short_name": "Zhongwen",
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "4.9.3",
-   "web_accessible_resources": [ "css/*", "js/*", "images/*" ]
+  "web_accessible_resources": [ "css/*", "js/*", "images/*" ],
+  "applications": {
+    "gecko": {
+      "id": "{b65c7bc6-846b-4f65-b6ed-099d7e042309}",
+      "strict_min_version": "55.0"
+    }
+  }
 }

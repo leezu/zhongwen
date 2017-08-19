@@ -1,82 +1,79 @@
 /*
         Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2012 Christian Schiller
+        Original Work Copyright (C) 2012 Christian Schiller
         https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Modified work Copyright (C) 2017 Leonard Lausen
+        https://github.com/leezu/zhongwen
 */
 
-function loadVals() {
-    var storedValue = localStorage['popupcolor'];
+function restoreOptions() {
+  var optionsPromise = browser.storage.sync.get({
+    options: {
+      'popupcolor': "yellow",
+      'tonecolors': "yes",
+      'fontSize': "small",
+      'skritterTLD': "com",
+      'zhuyin': "no",
+      'grammar': "yes"
+    }
+  });
+  optionsPromise.then((storage) => {
+    let options = storage.options;
     for (var i = 0; i < document.optform.popupcolor.length; i++) {
-        if(document.optform.popupcolor[i].value == storedValue) {
-            document.optform.popupcolor[i].selected = true;
-            break;
-        }
+      if (document.optform.popupcolor[i].value ==
+        options.popupcolor) {
+        document.optform.popupcolor[i].selected = true;
+        break;
+      }
     }
 
-    storedValue = localStorage['tonecolors'];
-    if(storedValue == 'no') {
-        document.optform.tonecolors[1].selected = true;
-    }
-    else {
-        document.optform.tonecolors[0].selected = true;
+    if (options.tonecolors == 'no') {
+      document.optform.tonecolors[1].selected = true;
+    } else {
+      document.optform.tonecolors[0].selected = true;
     }
 
-    storedValue = localStorage['fontSize'];
-    if(storedValue == 'small') {
-        document.optform.fontSize[1].selected = true;
-    }
-    else {
-        document.optform.fontSize[0].selected = true;
+    if (options.fontSize == 'small') {
+      document.optform.fontSize[1].selected = true;
+    } else {
+      document.optform.fontSize[0].selected = true;
     }
 
-    storedValue = localStorage['skritterTLD'];
-    if(storedValue == 'cn') {
-        document.optform.skritterTLD[1].selected = true;
-    }
-    else {
-        document.optform.skritterTLD[0].selected = true;
+    if (options.skritterTLD == 'cn') {
+      document.optform.skritterTLD[1].selected = true;
+    } else {
+      document.optform.skritterTLD[0].selected = true;
     }
 
-    storedValue = localStorage['zhuyin'];
-    if(storedValue == 'yes') {
-        document.optform.zhuyin[1].selected = true;
-    }
-    else {
-        document.optform.zhuyin[0].selected = true;
+    if (options.zhuyin == 'yes') {
+      document.optform.zhuyin[1].selected = true;
+    } else {
+      document.optform.zhuyin[0].selected = true;
     }
 
-    storedValue = localStorage['grammar'];
-    if(storedValue == 'no') {
-        document.optform.grammar[1].selected = true;
+    if (options.grammar == 'no') {
+      document.optform.grammar[1].selected = true;
+    } else {
+      document.optform.grammar[0].selected = true;
     }
-    else {
-        document.optform.grammar[0].selected = true;
-    }
+  });
 }
 
-function storeVals() {
-    localStorage['popupcolor'] = document.optform.popupcolor.value;
-    chrome.extension.getBackgroundPage().zhongwenMain.config.css = localStorage['popupcolor'];
-
-    localStorage['tonecolors'] = document.optform.tonecolors.value;
-    chrome.extension.getBackgroundPage().zhongwenMain.config.tonecolors = localStorage['tonecolors'];
-
-    localStorage['fontSize'] = document.optform.fontSize.value;
-    chrome.extension.getBackgroundPage().zhongwenMain.config.fontSize = localStorage['fontSize'];
-
-    localStorage['skritterTLD'] = document.optform.skritterTLD.value;
-    chrome.extension.getBackgroundPage().zhongwenMain.config.skritterTLD = localStorage['skritterTLD'];
-
-    localStorage['zhuyin'] = document.optform.zhuyin.value;
-    chrome.extension.getBackgroundPage().zhongwenMain.config.zhuyin = localStorage['zhuyin'];
-
-    localStorage['grammar'] = document.optform.grammar.value;
-    chrome.extension.getBackgroundPage().zhongwenMain.config.grammar = localStorage['grammar'];
+function saveOptions() {
+  let options = {
+    'popupcolor': document.optform.popupcolor.value,
+    'tonecolors': document.optform.tonecolors.value,
+    'fontSize': document.optform.fontSize.value,
+    'skritterTLD': document.optform.skritterTLD.value,
+    'zhuyin': document.optform.zhuyin.value,
+    'grammar': document.optform.grammar.value
+  };
+  let setting = browser.storage.sync.set({
+    options
+  });
 }
 
-$(function() {
-    $('#save').click(storeVals);
-});
-
-window.onload = loadVals;
-
+document.addEventListener('DOMContentLoaded',
+  restoreOptions);
+document.querySelector("form").addEventListener("submit",
+  saveOptions);

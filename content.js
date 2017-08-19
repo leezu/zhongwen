@@ -120,7 +120,7 @@ var zhongwenContent = {
             var css = topdoc.createElementNS('http://www.w3.org/1999/xhtml', 'link');
             css.setAttribute('rel', 'stylesheet');
             css.setAttribute('type', 'text/css');
-            var cssdoc = window.zhongwen.config.css;
+            var cssdoc = window.zhongwen.config.popupcolor;
             css.setAttribute('href', chrome.extension.getURL('css/popup-' +
                 cssdoc + '.css'));
             css.setAttribute('id', 'zhongwen-css');
