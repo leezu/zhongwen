@@ -22,7 +22,11 @@
    "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9kqvX6bQ05nYOOB67oitnTW6arQZbq/nLebcs8f2jwXM7cvZrkNaMtZroysYtDPFIES7yP4/SAsVP4CGKP7z/2o8/BBkqe+8+4Okk5bo23ovpGVSqGlpE63Q58Zkpl6j/GcVpHAlE5thNH7QmBjcAH5ESdt/o2iJaYDbImwthDwIDAQAB",
    "manifest_version": 2,
    "name": "Zhongwen: Chinese-English Dictionary",
-   "options_page": "options.html",
+   "options_ui": {
+     "page": "options.html",
+     "browser_style": true,
+     "chrome_style": true
+   },
    "permissions": [ "*://*/*", "contextMenus" ],
    "short_name": "Zhongwen",
    "update_url": "https://clients2.google.com/service/update2/crx",

@@ -36,7 +36,7 @@ function loadVals() {
     else {
         document.optform.skritterTLD[0].selected = true;
     }
-        
+
     storedValue = localStorage['zhuyin'];
     if(storedValue == 'yes') {
         document.optform.zhuyin[1].selected = true;
