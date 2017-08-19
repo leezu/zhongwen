@@ -1578,7 +1578,7 @@ var zhongwenContent = {
 }
 
 //Event Listeners
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         switch(request.type) {
             case 'enable':
@@ -1589,7 +1589,7 @@ chrome.runtime.onMessage.addListener(
                 zhongwenContent.disableTab();
                 break;
             case 'showPopup':
-                if (!request.isHelp || window == window.top) { 
+                if (!request.isHelp || window == window.top) {
                     var range = document.createRange();
                     var helpFragment = range.createContextualFragment(zhongwenContent.miniHelp);
                     zhongwenContent.showPopup(helpFragment);
@@ -1597,10 +1597,9 @@ chrome.runtime.onMessage.addListener(
                 break;
             default:
         }
-    }
-    );
+    });
 
 // When a page first loads, checks to see if it should enable script
-chrome.runtime.sendMessage({
+browser.runtime.sendMessage({
     "type": "enable?"
 });

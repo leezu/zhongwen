@@ -4,22 +4,18 @@
         Modified work Copyright (C) 2017 Leonard Lausen
         https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 */
-if (localStorage['enabled'] == 1) {
-  zhongwenMain.loadDictionary();
-  zhongwenMain.enabled = 1;
-} else {
-  zhongwenMain.enabled = 0;
-}
 
-chrome.runtime.onMessage.addListener(function(request, sender, response) {
+browser.runtime.onMessage.addListener(function(request, sender, response) {
     switch(request.type) {
         case 'enable?':
+            // When a page first loads, checks to see if it should enable script
             zhongwenMain.onTabSelect(sender.tab.id);
             break;
+
         case 'search':
             var e = zhongwenMain.search(request.text);
-            response(e);
-            break;
+            return Promise.resolve(e);
+
         case 'open':
 
             var tabID = zhongwenMain.tabIDs[request.tabType];
@@ -66,6 +62,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
             document.execCommand('copy');
             document.body.removeChild(txt);
             break;
+
         case 'add':
             var json = localStorage['wordlist'];
 
@@ -73,12 +70,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
             if (json) {
                 wordlist = JSON.parse(json);
             } else {
-                wordlist = []
+                wordlist = [];
             }
 
             for (var i in request.entries) {
 
-                var entry = {}
+                var entry = {};
                 entry.simplified = request.entries[i].simplified;
                 entry.traditional = request.entries[i].traditional;
                 entry.pinyin = request.entries[i].pinyin;
@@ -103,5 +100,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
     }
 });
 
-chrome.browserAction.onClicked.addListener(zhongwenMain.enableToggle);
-chrome.tabs.onActivated.addListener(zhongwenMain.onTabSelect);
+browser.browserAction.onClicked.addListener(zhongwenMain.enableToggle);
+browser.tabs.onUpdated.addListener(zhongwenMain.onTabSelect);

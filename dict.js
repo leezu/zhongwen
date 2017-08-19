@@ -1,7 +1,9 @@
 /*
         Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
+        Original Work Copyright (C) 2011 Christian Schiller
         https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Modified work Copyright (C) 2017 Leonard Lausen
+        https://github.com/leezu/zhongwen
 
         ---
 
@@ -43,26 +45,35 @@
         when modifying any of the files.
 
 */
+async function loadDictData() {
+  let wordDict = fetch(browser.extension.getURL(
+    "data/cedict_ts.u8")).then(
+    processText);
+  let wordIndex = fetch(browser.extension.getURL(
+    "data/cedict.idx")).then(
+    processText);
+  let grammarKeywords = fetch(browser.extension.getURL(
+    "data/grammarKeywordsMin.json")).then(processJson);
 
-function zhongwenDict() {
-    this.loadDictionary();
+  return Promise.all([wordDict, wordIndex, grammarKeywords]);
 }
 
-zhongwenDict.prototype = {
+async function processText(response) {
+  return response.text();
+}
 
-    wordDict: undefined,
-    wordIndex: undefined,
+async function processJson(response) {
+  return response.json();
+}
 
-    grammarKeywords: {},
+class ZhongwenDictionary {
+  constructor (wordDict, wordIndex, grammarKeywords) {
+    this.wordDict = wordDict;
+    this.wordIndex = wordIndex;
+    this.grammarKeywords = grammarKeywords;
+  }
 
-    fileRead: function(url) {
-        var req = new XMLHttpRequest();
-        req.open("GET", url, false);
-        req.send(null);
-        return req.responseText;
-    },
-
-    find: function(data, text) {
+    find(data, text) {
         const tlen = text.length;
         var beg = 0;
         var end = data.length - 1;
@@ -80,21 +91,13 @@ zhongwenDict.prototype = {
             else return data.substring(i, data.indexOf('\n', mi + 1));
         }
         return null;
-    },
+    }
 
-    loadDictionary: function() {
-        this.wordDict = this.fileRead(chrome.extension.getURL("data/cedict_ts.u8"));
-        this.wordIndex = this.fileRead(chrome.extension.getURL("data/cedict.idx"));
-
-        var grammarKeywordFile = this.fileRead(chrome.extension.getURL("data/grammarKeywordsMin.json"));
-        this.grammarKeywords = JSON.parse(grammarKeywordFile);
-    },
-
-    hasKeyword: function (keyword) {
+    hasKeyword(keyword) {
         return this.grammarKeywords[keyword];
-    },
-    
-    wordSearch: function(word, max) {
+    }
+
+    wordSearch(word, max) {
         var entry = { };
 
         var dict = this.wordDict;
@@ -148,9 +151,9 @@ zhongwenDict.prototype = {
 
         entry.matchLen = maxLen;
         return entry;
-    },
+    }
 
-    translate: function(text) {
+    translate(text) {
         var e, o;
         var skip;
 
