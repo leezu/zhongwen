@@ -9,8 +9,9 @@
    },
    "content_scripts": [ {
       "all_frames": true,
+      "match_about_blank": true,
       "js": [ "content.js" ],
-      "matches": [ "\u003Call_urls>" ]
+      "matches": [ "<all_urls>" ]
    } ],
    "description": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter. Firefox fork of the Christian Schillers Chrome extension.",
    "icons": {

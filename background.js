@@ -98,14 +98,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
             }
 
             break;
-        case 'iframe':
-            chrome.tabs.executeScript(sender.tab.id, {
-                file: 'content.js',
-                allFrames: true
-            })
-            break;
         default:
-    // ignore
+            // ignore
     }
 });
 

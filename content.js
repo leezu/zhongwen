@@ -66,15 +66,6 @@ var zhongwenContent = {
             document.addEventListener('mousemove', this.onMouseMove);
             document.addEventListener('keydown', this.onKeyDown);
             document.addEventListener('keyup', this.onKeyUp);
-            document.addEventListener('DOMNodeInserted', this.onDOMNodeInserted)
-        }
-    },
-    
-    onDOMNodeInserted: function(ev) {
-        if (ev.target.nodeName == 'IFRAME') {
-            chrome.runtime.sendMessage({
-                "type": "iframe"
-            });
         }
     },
 
@@ -85,7 +76,6 @@ var zhongwenContent = {
             document.removeEventListener('mousemove', this.onMouseMove);
             document.removeEventListener('keydown', this.onKeyDown);
             document.removeEventListener('keyup', this.onKeyUp);
-            document.removeEventListener('DOMNodeInserted', this.onDOMNodeInserted)
 
             e = document.getElementById('zhongwen-css');
             if (e) e.parentNode.removeChild(e);
