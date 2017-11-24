@@ -29,7 +29,7 @@
      "browser_style": true,
      "chrome_style": true
    },
-  "permissions": [ "*://*/*", "contextMenus", "storage" ],
+  "permissions": [ "*://*/*", "contextMenus", "storage", "downloads"],
    "short_name": "Zhongwen",
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "4.9.4",

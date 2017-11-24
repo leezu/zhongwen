@@ -65,26 +65,48 @@ $(function() {
 
     selected.sort();
 
-    var content = '';
+    var set = {};
     for (var i in selected) {
-      var entry = entries[selected[i] - 1];
-      content += entry.simplified;
-      content += '\t';
-      content += entry.traditional;
-      content += '\t';
-      content += entry.pinyin;
-      content += '\t';
-      content += entry.definition;
-      content += '\r\n';
+      set[selected[i]] = 1;
+    }
+
+    var content = '';
+    for (i in entries) {
+      var entry_id = entries[i].id;
+      if (set[entry_id]) {
+        var entry = entries[i];
+        content += entry.simplified;
+        content += '\t';
+        content += entry.traditional;
+        content += '\t';
+        content += entry.pinyin;
+        content += '\t';
+        content += entry.definition;
+        content += '\r\n';
+      }
     }
 
     var saveBlob = new Blob([content], {
       "type": "text/plain"
     });
-    var a = document.getElementById('savelink');
-    a.href = window.webkitURL.createObjectURL(
-      saveBlob);
-    a.click();
+    window.URL = window.URL || window.webkitURL; // Support Firefox & Chrome
+    url = window.URL.createObjectURL(saveBlob);
+
+    function onStartedDownload(id) {
+      console.log(`Started downloading: ${id}`);
+    }
+
+    function onFailed(error) {
+      console.log(`Download failed: ${error}`);
+    }
+
+    var downloading = browser.downloads.download({
+      url: url,
+      filename: "zhongwen-words.txt",
+      conflictAction: 'uniquify',
+      saveAs: true
+    });
+    downloading.then(onStartedDownload, onFailed);
   });
 
   $('#delete').click(function(e) {
@@ -95,13 +117,14 @@ $(function() {
 
     var set = {};
     for (var i in selected) {
-      set[selected[i] - 1] = 1;
+      set[selected[i]] = 1;
     }
 
     var toKeep = [];
-    for (var j = 0; j < entries.length; j++) {
-      if (!set[j]) {
-        toKeep.push(entries[j]);
+    for (i in entries) {
+      var entry_id = entries[i].id;
+      if (!set[entry_id]) {
+        toKeep.push(entries[i]);
       }
     }
 
