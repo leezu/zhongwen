@@ -1,4 +1,8 @@
 # Change Log
+## 4.9.5
+- Fix wordlist saving and deletion
+- Update jqgrid to 4.15.2
+
 ## 4.9.4
 - Support 'Preferences' button for about:addons
   - Settings are synced between different computers
