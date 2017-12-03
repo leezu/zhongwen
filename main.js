@@ -67,7 +67,9 @@ var zhongwenMain = {
         zhongwenMain._onTabSelect(tabId);
     },
   _onTabSelect: function(tabId) {
-      if (localStorage['enabled'] == 1) {
+    let enabledPromise = browser.storage.local.get({enabled: 0});
+    enabledPromise.then((storage) => {
+      if (storage.enabled == 1) {
         let optionsPromise = browser.storage.sync.get({
           options: {
             'popupcolor': "yellow",
@@ -85,7 +87,8 @@ var zhongwenMain = {
           }).catch(reportError);
         });
       }
-    },
+    });
+  },
 
     enable: function(tab) {
       let optionsPromise = browser.storage.sync.get({
@@ -99,9 +102,11 @@ var zhongwenMain = {
         }
       });
       let dictionaryPromise = zhongwenMain.loadDictionary();
+      let enabled = 1;
+      let enablePromise = browser.storage.local.set({enabled});
 
-      Promise.all([optionsPromise, dictionaryPromise]).then(([storage, dictionary]) => {
-        localStorage['enabled'] = 1;
+      Promise.all([optionsPromise, dictionaryPromise, enablePromise]).then(
+        ([storage, dictionary, enabled]) => {
 
         this.dict = dictionary;
 
@@ -169,43 +174,47 @@ var zhongwenMain = {
     },
 
     disable: function(tab) {
-      localStorage['enabled'] = 0;
+      let enabled = 0;
+      let enablePromise = browser.storage.local.set({enabled});
 
-      // Delete dictionary object after we implement it
-      delete this.dict;
+      Promise.all([enablePromise]).then(([storage]) => {
+        // Delete dictionary object after we implement it
+        delete this.dict;
 
-      browser.browserAction.setBadgeBackgroundColor({
-        "color": [0, 0, 0, 0]
-      });
-      browser.browserAction.setBadgeText({
-        "text": ""
-      });
+        browser.browserAction.setBadgeBackgroundColor({
+          "color": [0, 0, 0, 0]
+        });
+        browser.browserAction.setBadgeText({
+          "text": ""
+        });
 
-      // Send a disable message to all browsers.
-
-
-      browser.windows.getAll({
-        "populate": true
-      }).then((windowInfoArray) => {
-        for (let windowInfo of windowInfoArray) {
-          for (let tabInfo of windowInfo.tabs) {
-            browser.tabs.sendMessage(tabInfo.id, {
-              type: "disable"
-            }).catch(ignoreError);
-            // Some tabs may not have a listener as they were never activated
+        // Send a disable message to all browsers.
+        browser.windows.getAll({
+          "populate": true
+        }).then((windowInfoArray) => {
+          for (let windowInfo of windowInfoArray) {
+            for (let tabInfo of windowInfo.tabs) {
+              browser.tabs.sendMessage(tabInfo.id, {
+                type: "disable"
+              }).catch(ignoreError);
+              // Some tabs may not have a listener as they were never activated
+            }
           }
-        }
-      });
+        });
 
-      chrome.contextMenus.removeAll();
+        browser.contextMenus.removeAll();
+      });
     },
 
   enableToggle: function(tab) {
-    if (localStorage['enabled'] == 1) {
-      zhongwenMain.disable(tab);
-    } else {
-      zhongwenMain.enable(tab);
-    }
+    let enabledPromise = browser.storage.local.get({enabled: 0});
+    enabledPromise.then((storage) => {
+      if (storage.enabled == 1) {
+        zhongwenMain.disable(tab);
+      } else {
+        zhongwenMain.enable(tab);
+      }
+    });
   },
 
     search: function(text) {
