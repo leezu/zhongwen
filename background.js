@@ -108,5 +108,42 @@ let tabPromise = browser.tabs.getCurrent();
 Promise.all([enabledPromise, tabPromise]).then(([storage, tab]) => {
   if (storage.enabled == 1) {
     zhongwenMain.enable(tab);
+
+    browser.browserAction.setBadgeBackgroundColor({
+      "color": [255, 0, 0, 255]
+    });
+
+    browser.browserAction.setBadgeText({
+      "text": "On"
+    });
   };
+});
+
+
+browser.contextMenus.create({
+  title: "Open word list",
+  onclick: function() {
+    var url = browser.extension.getURL("/wordlist.html");
+    var tabID = zhongwenMain.tabIDs['wordlist'];
+    if (tabID) {
+      browser.tabs.get(tabID, function(tab) {
+        if (tab && (tab.url.substr(-13) == 'wordlist.html')) {
+          browser.tabs.reload(tabID);
+          browser.tabs.update(tabID, {active: true});
+        } else {
+          browser.tabs.create({
+            url: url
+          }, function(tab) {
+            zhongwenMain.tabIDs['wordlist'] = tab.id;
+            browser.tabs.reload(tab.id);
+          });
+        }
+      });
+    } else {
+      browser.tabs.create({ url: url }, function(tab) {
+        zhongwenMain.tabIDs['wordlist'] = tab.id;
+        browser.tabs.reload(tab.id); });
+    }
+  },
+  contexts: ['all']
 });

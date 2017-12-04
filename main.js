@@ -128,48 +128,6 @@ var zhongwenMain = {
         browser.browserAction.setBadgeText({
           "text": "On"
         });
-
-        chrome.contextMenus.create({
-          title: "Open word list",
-          onclick: function() {
-            var url = chrome.extension.getURL(
-              "/wordlist.html");
-            var tabID = zhongwenMain.tabIDs[
-              'wordlist'];
-            if (tabID) {
-              chrome.tabs.get(tabID, function(
-                tab) {
-                if (tab && (tab.url.substr(-
-                      13) ==
-                    'wordlist.html')) {
-                  chrome.tabs.reload(tabID);
-                  chrome.tabs.update(tabID, {
-                    active: true
-                  });
-                } else {
-                  chrome.tabs.create({
-                    url: url
-                  }, function(tab) {
-                    zhongwenMain.tabIDs[
-                        'wordlist'] =
-                      tab.id;
-                    chrome.tabs.reload(
-                      tab.id);
-                  });
-                }
-              });
-            } else {
-              chrome.tabs.create({
-                url: url
-              }, function(tab) {
-                zhongwenMain.tabIDs[
-                  'wordlist'] = tab.id;
-                chrome.tabs.reload(tab.id);
-              });
-            }
-          },
-          contexts: ['all']
-        });
       });
     },
 
@@ -201,8 +159,6 @@ var zhongwenMain = {
             }
           }
         });
-
-        browser.contextMenus.removeAll();
       });
     },
 
