@@ -102,3 +102,11 @@ browser.runtime.onMessage.addListener(function(request, sender, response) {
 
 browser.browserAction.onClicked.addListener(zhongwenMain.enableToggle);
 browser.tabs.onUpdated.addListener(zhongwenMain.onTabSelect);
+
+let enabledPromise = browser.storage.local.get({enabled: 0});
+let tabPromise = browser.tabs.getCurrent();
+Promise.all([enabledPromise, tabPromise]).then(([storage, tab]) => {
+  if (storage.enabled == 1) {
+    zhongwenMain.enable(tab);
+  };
+});
