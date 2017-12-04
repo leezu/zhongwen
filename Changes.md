@@ -1,5 +1,9 @@
 # Change Log
 ## 4.9.5
+- Preserve addon activation status between browser restarts
+- Show wordlist context menu entry even if popup dictionary is not active
+
+## 4.9.5
 - Fix wordlist saving and deletion
 - Update jqgrid to 4.15.2
 
