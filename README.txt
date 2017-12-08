@@ -4,6 +4,8 @@ Copyright (C) 2010-2017 Christian Schiller
 
 https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
+https://addons.mozilla.org/en-US/firefox/addon/zhongwen-chinese-english/
+
 Translate Chinese characters and words by simply hovering over them with the mouse.
 
 - Supports both traditional and simplified characters.
