@@ -1,5 +1,9 @@
 # Change Log
-## 4.9.5
+## 4.9.7
+- Show wordlist context menu entry even if popup dictionary is not active, but
+  only in the browser_action menu and not the page menu.
+
+## 4.9.6
 - Preserve addon activation status between browser restarts
 - Show wordlist context menu entry even if popup dictionary is not active
 
