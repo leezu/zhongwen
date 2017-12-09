@@ -85,7 +85,7 @@ browser.runtime.onMessage.addListener(function(request, sender, response) {
             }
             localStorage['wordlist'] = JSON.stringify(wordlist);
 
-            var tabID = zhongwenMain.tabIDs['wordlist'];
+            tabID = zhongwenMain.tabIDs['wordlist'];
             if (tabID) {
                 chrome.tabs.get(tabID, function(tab) {
                     if (tab) {
@@ -122,28 +122,7 @@ Promise.all([enabledPromise, tabPromise]).then(([storage, tab]) => {
 
 browser.contextMenus.create({
   title: "Open word list",
-  onclick: function() {
-    var url = browser.extension.getURL("/wordlist.html");
-    var tabID = zhongwenMain.tabIDs['wordlist'];
-    if (tabID) {
-      browser.tabs.get(tabID, function(tab) {
-        if (tab && (tab.url.substr(-13) == 'wordlist.html')) {
-          browser.tabs.reload(tabID);
-          browser.tabs.update(tabID, {active: true});
-        } else {
-          browser.tabs.create({
-            url: url
-          }, function(tab) {
-            zhongwenMain.tabIDs['wordlist'] = tab.id;
-            browser.tabs.reload(tab.id);
-          });
-        }
-      });
-    } else {
-      browser.tabs.create({ url: url }, function(tab) {
-        zhongwenMain.tabIDs['wordlist'] = tab.id;
-        browser.tabs.reload(tab.id); });
-    }
-  },
-  contexts: ['all']
+  id: "wordlist-browser_action",
+  onclick: zhongwenMain.wordlistTab,
+  contexts: ['browser_action']
 });
