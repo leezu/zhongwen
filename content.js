@@ -446,20 +446,20 @@ var zhongwenContent = {
                     });
                 }
                 break;
-            case 50:     // 2
-                if (ev.altKey) {
-                    sel = encodeURIComponent(
-                        window.getSelection().toString());
-
-                    // http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=%E4%B8%AD
-                    var yellow = 'http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=' + sel;
-
-                    chrome.extension.sendRequest({
-                        type: 'open',
-                        url: yellow
-                    });
-                }
-                break;
+            // case 50:     // 2
+            //     if (ev.altKey) {
+            //         sel = encodeURIComponent(
+            //             window.getSelection().toString());
+            //
+            //         // http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=%E4%B8%AD
+            //         var yellow = 'http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=' + sel;
+            //
+            //         chrome.extension.sendRequest({
+            //             type: 'open',
+            //             url: yellow
+            //         });
+            //     }
+            //     break;
             case 51:     // 3
                 if (ev.altKey) {
                     sel = encodeURIComponent(
