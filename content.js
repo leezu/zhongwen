@@ -441,20 +441,20 @@ var zhongwenContent = {
                     });
                 }
                 break;
-            case 50:     // 2
-                if (ev.altKey) {
-                    sel = encodeURIComponent(
-                        window.getSelection().toString());
-
-                    // http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=%E4%B8%AD
-                    var yellow = 'http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=' + sel;
-
-                    chrome.runtime.sendMessage({
-                        type: 'open',
-                        url: yellow
-                    });
-                }
-                break;
+            // case 50:     // 2
+            //     if (ev.altKey) {
+            //         sel = encodeURIComponent(
+            //             window.getSelection().toString());
+            //
+            //         // http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=%E4%B8%AD
+            //         var yellow = 'http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=' + sel;
+            //
+            //         chrome.runtime.sendMessage({
+            //             type: 'open',
+            //             url: yellow
+            //         });
+            //     }
+            //     break;
             case 51:     // 3
                 if (ev.altKey) {
                     sel = encodeURIComponent(
@@ -1568,7 +1568,7 @@ var zhongwenContent = {
     '<tr><td colspan=2>Look up selected text in online resource:</td></tr>' +
     '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
     '<tr><td><b>Alt + 1&nbsp;:</b></td><td>&nbsp;nciku</td></tr>' +
-    '<tr><td><b>Alt + 2&nbsp;:</b></td><td>&nbsp;YellowBridge</td></tr>' +
+    // '<tr><td><b>Alt + 2&nbsp;:</b></td><td>&nbsp;YellowBridge</td></tr>' +
     '<tr><td><b>Alt + 3&nbsp;:</b></td><td>&nbsp;Dict.cn</td></tr>' +
     '<tr><td><b>Alt + 4&nbsp;:</b></td><td>&nbsp;iCIBA</td></tr>' +
     '<tr><td><b>Alt + 5&nbsp;:</b></td><td>&nbsp;MDBG</td></tr>' +
