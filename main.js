@@ -90,53 +90,55 @@ var zhongwenMain = {
     });
   },
 
-    enable: function(tab) {
-      let optionsPromise = browser.storage.sync.get({
-        options: {
-          'popupcolor': "yellow",
-          'tonecolors': "yes",
-          'fontSize': "small",
-          'skritterTLD': "com",
-          'zhuyin': "no",
-          'grammar': "yes"
-        }
-      });
-      let dictionaryPromise = zhongwenMain.loadDictionary();
-      let enabled = 1;
-      let enablePromise = browser.storage.local.set({enabled});
+  enable: function(tab) {
+    let optionsPromise = browser.storage.sync.get({
+      options: {
+        'popupcolor': 'yellow',
+        'tonecolors': 'yes',
+        'fontSize': 'small',
+        'skritterTLD': 'com',
+        'zhuyin': 'no',
+        'grammar': 'yes'
+      }
+    })
+    let dictionaryPromise = zhongwenMain.loadDictionary()
+    let enabled = 1
+    let enablePromise = browser.storage.local.set({enabled})
 
-      Promise.all([optionsPromise, dictionaryPromise, enablePromise]).then(
-        ([storage, dictionary, enabled]) => {
+    Promise.all([optionsPromise, dictionaryPromise, enablePromise]).then(
+      ([storage, dictionary, enabled]) => {
 
-        this.dict = dictionary;
+        this.dict = dictionary
 
         // Send message to current tab to add listeners and create stuff
-        browser.tabs.sendMessage(tab.id, {
-          type: "enable",
-          config: storage.options
-        }).catch(reportError);
+        if (tab !== undefined) {
+          browser.tabs.sendMessage(tab.id, {
+            type: 'enable',
+            config: storage.options
+          }).catch(reportError)
 
-        browser.tabs.sendMessage(tab.id, {
-          type: "showPopup",
-          isHelp: true
-        }).catch(reportError);
+          browser.tabs.sendMessage(tab.id, {
+            type: 'showPopup',
+            isHelp: true
+          }).catch(reportError)
+        }
 
         browser.browserAction.setBadgeBackgroundColor({
-          "color": [255, 0, 0, 255]
-        });
+          'color': [255, 0, 0, 255]
+        })
 
         browser.browserAction.setBadgeText({
-          "text": "On"
-        });
+          'text': 'On'
+        })
 
         browser.contextMenus.create({
-          title: "Open word list",
-          id: "wordlist-page",
+          title: 'Open word list',
+          id: 'wordlist-page',
           onclick: zhongwenMain.wordlistTab,
           contexts: ['page']
-        });
-      });
-    },
+        })
+      })
+  },
 
     disable: function(tab) {
       let enabled = 0;

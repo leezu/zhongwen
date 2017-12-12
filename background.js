@@ -100,29 +100,27 @@ browser.runtime.onMessage.addListener(function(request, sender, response) {
     }
 });
 
-browser.browserAction.onClicked.addListener(zhongwenMain.enableToggle);
-browser.tabs.onUpdated.addListener(zhongwenMain.onTabSelect);
+browser.browserAction.onClicked.addListener(zhongwenMain.enableToggle)
+browser.tabs.onActivated.addListener(zhongwenMain.onTabSelect)
 
-let enabledPromise = browser.storage.local.get({enabled: 0});
-let tabPromise = browser.tabs.getCurrent();
-Promise.all([enabledPromise, tabPromise]).then(([storage, tab]) => {
-  if (storage.enabled == 1) {
-    zhongwenMain.enable(tab);
-
+let enabledPromise = browser.storage.local.get({enabled: 0})
+Promise.all([enabledPromise]).then(([storage]) => {
+  var tab // Can't retrieve tab object in background script
+  if (storage.enabled === 1) {
+    zhongwenMain.enable(tab)
     browser.browserAction.setBadgeBackgroundColor({
-      "color": [255, 0, 0, 255]
-    });
+      'color': [255, 0, 0, 255]
+    })
 
     browser.browserAction.setBadgeText({
-      "text": "On"
-    });
-  };
-});
-
+      'text': 'On'
+    })
+  }
+})
 
 browser.contextMenus.create({
-  title: "Open word list",
-  id: "wordlist-browser_action",
+  title: 'Open word list',
+  id: 'wordlist-browser_action',
   onclick: zhongwenMain.wordlistTab,
   contexts: ['browser_action']
-});
+})
