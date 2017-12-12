@@ -61,15 +61,15 @@ var zhongwenMain = {
       return new ZhongwenDictionary(...dictData);
     },
 
-    // The callback for onActivated.
-    // Just sends a message to the tab to enable itself if it hasn't already.
-    onTabSelect: function(tabId) {
-        zhongwenMain._onTabSelect(tabId);
-    },
-  _onTabSelect: function(tabId) {
+  // The callback for onActivated.
+  // Just sends a message to the tab to enable itself if it hasn't already.
+  onTabSelect: function (activeInfo) {
+    zhongwenMain._onTabSelect(activeInfo.tabId)
+  },
+  _onTabSelect: function (tabId) {
     let enabledPromise = browser.storage.local.get({enabled: 0});
     enabledPromise.then((storage) => {
-      if (storage.enabled == 1) {
+      if (storage.enabled === 1) {
         let optionsPromise = browser.storage.sync.get({
           options: {
             'popupcolor': "yellow",
