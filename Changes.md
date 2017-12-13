@@ -1,4 +1,7 @@
 # Change Log
+## 4.11.2
+- Fix display of '</span>' for zhuyin
+
 ## 4.11.1
 - Bug fixes for addon enabling
 

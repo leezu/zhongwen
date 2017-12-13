@@ -1119,7 +1119,7 @@ var zhongwenContent = {
             zhuyinSpan.className = zhuyinClass + ' tone' + m[4];
             zhuyinSpan.textContent +=
               this.zhuyinMap[syllable.substring(0, syllable.length -1).toLowerCase()]
-              + this.zhuyinTones[syllable[syllable.length - 1]] + '</span>';
+              + this.zhuyinTones[syllable[syllable.length - 1]];
             zhuyinFragment.appendChild(zhuyinSpan);
         }
         return [fragment, text, zhuyinFragment];
