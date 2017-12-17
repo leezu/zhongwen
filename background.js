@@ -17,7 +17,6 @@ browser.runtime.onMessage.addListener(function(request, sender, response) {
             return Promise.resolve(e);
 
         case 'open':
-
             var tabID = zhongwenMain.tabIDs[request.tabType];
             if (tabID) {
                 chrome.tabs.get(tabID, function(tab) {
@@ -50,17 +49,6 @@ browser.runtime.onMessage.addListener(function(request, sender, response) {
                 });
             }
 
-            break;
-
-        case 'copy':
-            var txt = document.createElement('textarea');
-            txt.style.position = "absolute";
-            txt.style.left = "-100%";
-            txt.value = request.data;
-            document.body.appendChild(txt);
-            txt.select();
-            document.execCommand('copy');
-            document.body.removeChild(txt);
             break;
 
         case 'add':

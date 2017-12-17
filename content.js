@@ -919,10 +919,14 @@ var zhongwenContent = {
     },
 
     copyToClipboard : function(data) {
-        chrome.runtime.sendMessage({
-            "type": "copy",
-            "data": data
-        });
+        var txt = document.createElement('textarea');
+        txt.style.position = "absolute";
+        txt.style.left = "-100%";
+        txt.value = data;
+        document.body.appendChild(txt);
+        txt.select();
+        document.execCommand('copy');
+        document.body.removeChild(txt);
 
         var fragment = document.createDocumentFragment();
         var p = document.createElement("p");

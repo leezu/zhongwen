@@ -1,4 +1,7 @@
 # Change Log
+## 4.11.3
+- Fix copy to clipboard
+
 ## 4.11.2
 - Fix display of '</span>' for zhuyin
 
