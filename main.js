@@ -61,34 +61,37 @@ var zhongwenMain = {
       return new ZhongwenDictionary(...dictData);
     },
 
-  // The callback for onActivated.
-  // Just sends a message to the tab to enable itself if it hasn't already.
-  onTabSelect: function (activeInfo) {
-    zhongwenMain._onTabSelect(activeInfo.tabId)
-  },
-  _onTabSelect: function (tabId) {
-    let enabledPromise = browser.storage.local.get({enabled: 0});
-    enabledPromise.then((storage) => {
-      if (storage.enabled === 1) {
-        let optionsPromise = browser.storage.sync.get({
-          options: {
-            'popupcolor': "yellow",
-            'tonecolors': "yes",
-            'fontSize': "small",
-            'skritterTLD': "com",
-            'zhuyin': "no",
-            'grammar': "yes"
-          }
+    // The callback for onActivated.
+    // Just sends a message to the tab to enable itself if it hasn't already.
+    onTabActivated: function (activeInfo) {
+        zhongwenMain._checkEnableTab(activeInfo.tabId)
+    },
+    onTabUpdated: function (tabId, changeInfo, tabInfo) {
+        zhongwenMain._checkEnableTab(tabId)
+    },
+    _checkEnableTab: function (tabId) {
+        let enabledPromise = browser.storage.local.get({enabled: 0});
+        enabledPromise.then((storage) => {
+            if (storage.enabled === 1) {
+                let optionsPromise = browser.storage.sync.get({
+                    options: {
+                        'popupcolor': "yellow",
+                        'tonecolors': "yes",
+                        'fontSize': "small",
+                        'skritterTLD': "com",
+                        'zhuyin': "no",
+                        'grammar': "yes"
+                    }
+                });
+                optionsPromise.then((storage) => {
+                    browser.tabs.sendMessage(tabId, {
+                        type: "enable",
+                        config: storage.options
+                    }).catch(reportError);
+                });
+            }
         });
-        optionsPromise.then((storage) => {
-          browser.tabs.sendMessage(tabId, {
-            type: "enable",
-            config: storage.options
-          }).catch(reportError);
-        });
-      }
-    });
-  },
+    },
 
   enable: function(tab) {
     let optionsPromise = browser.storage.sync.get({

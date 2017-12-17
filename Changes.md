@@ -1,4 +1,7 @@
 # Change Log
+## 4.11.5
+- Really fix for addon activation on tab change / new tabs
+
 ## 4.11.4
 - Fix key handling
 
