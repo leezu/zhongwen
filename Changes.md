@@ -1,4 +1,7 @@
 # Change Log
+## 4.11.4
+- Fix key handling
+
 ## 4.11.3
 - Fix copy to clipboard
 

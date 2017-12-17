@@ -536,6 +536,8 @@ var zhongwenContent = {
             this.keysDown[ev.keyCode] = 1;
         }
 
+        // Cancel the default action to avoid it being handled twice
+        ev.preventDefault();
     },
 
     getTexts: function() {
