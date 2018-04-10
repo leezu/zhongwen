@@ -39,5 +39,13 @@
       "id": "{b65c7bc6-846b-4f65-b6ed-099d7e042309}",
       "strict_min_version": "55.0"
     }
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Z"
+      },
+      "description": "Toggle Zhongwen on/off"
+    }
   }
 }
