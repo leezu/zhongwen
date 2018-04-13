@@ -1,4 +1,16 @@
 # Change Log
+## 4.14.1
+- Fix unwanted keypress interception by Zhongwen in rare cases (#10)
+
+## 4.14
+- Update CC-CEDICT dictionary
+
+## 4.13
+- Update CC-CEDICT dictionary
+
+## 4.12
+- Update CC-CEDICT dictionary
+
 ## 4.11.5
 - Really fix for addon activation on tab change / new tabs
 
