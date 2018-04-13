@@ -1,4 +1,7 @@
 # Change Log
+## 4.14.2
+- Option to toggle Zhongwen via keyboard shortcut
+
 ## 4.14.1
 - Fix unwanted keypress interception by Zhongwen in rare cases (#10)
 
