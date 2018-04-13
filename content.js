@@ -277,9 +277,7 @@ var zhongwenContent = {
         }
 
         if (!this.isVisible()) {
-            if (window.getSelection() && !(window.getSelection().toString().length > 0)) {
-                return;
-            }
+            return;
         }
 
         var i;
