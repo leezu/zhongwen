@@ -1571,6 +1571,7 @@ var zhongwenContent = {
     '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
     '<tr><td><b>R&nbsp;:</b></td><td>&nbsp;Remember word by adding it to the internal word list</td></tr>' +
     '<tr><td><b>Alt + W&nbsp;:</b></td><td>&nbsp;Show the word list</td></tr>' +
+    '<tr><td><b>Alt + Z&nbsp;:</b></td><td>&nbsp;Toggle Zhongwen on/off</td></tr>' +
     '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
     '<tr><td colspan=2>Look up selected text in online resource:</td></tr>' +
     '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
