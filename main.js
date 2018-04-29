@@ -53,10 +53,6 @@ var zhongwenMain = {
     miniHelp:
     '<span style="font-weight: bold;">Zhongwen Chinese-English Dictionary&nbsp;&nbsp;&nbsp;</span><br><br>' +
     '<p>' +
-    '<span style="font-style: italic; font-weight: bold;">New: </span>' + 
-    '<span style="font-style: italic;">In order to make Zhongwen work in input fields and text areas,<br>' + 
-    ' hold down the Alt-key on your keyboard.</span><br><br>' +
-    '<p>' +
     'Keyboard shortcuts:' +
     '<p>' +
     '<table style="margin: 20px;" cellspacing=5 cellpadding=5>' +

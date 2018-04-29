@@ -13,13 +13,14 @@ Translate Chinese characters and words by simply hovering over them with the mou
   and memorize the different characters, especially those with a large number of strokes.
   Can also be used as a magnifier for small Chinese characters.
 - As a learning aid it uses different colors for displaying the Pinyin syllables,
-  depending on the tone of the Chinese character. The color scheme is the same
-  as the one used by Skritter.
+  depending on the tone of the Chinese character.
 - Can be turned on and off with a single mouse-click.
 - Highlights the characters whose translation is displayed in the popup window.
 - Also supports keyboard navigation for translating the next character, the next word, or the
   previous character.
-- Supports exporting words to the Skritter vocabulary queue.
+- Supports exporting words to the Skritter vocabulary queue (https://skritter.com/)
+- Includes links to grammar and usage notes on the Chinese Grammar Wiki
+  (https://resources.allsetlearning.com/chinese/grammar)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
