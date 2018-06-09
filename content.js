@@ -1602,8 +1602,3 @@ browser.runtime.onMessage.addListener(
             default:
         }
     });
-
-// When a page first loads, checks to see if it should enable script
-browser.runtime.sendMessage({
-    "type": "enable?"
-});
