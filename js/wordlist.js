@@ -1,7 +1,10 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2012 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+    Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+    Copyright (C) 2011-2013 Christian Schiller
+    https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+
+    German version of the Chinese-English Zhongwen Popup-Dictionary
+    https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 */
         
 var wlstring = localStorage['wordlist'];
@@ -18,7 +21,7 @@ $(function() {
     $('#words').jqGrid({
         data: entries,
         datatype: 'local',
-        colNames: ['Simplified', 'Traditional', 'Pinyin', 'Definition'],
+        colNames: ['Kurzzeichen', 'Langzeichen', 'Pinyin', 'Definition'],
         colModel: [
         {
             name: 'simplified', 
@@ -48,7 +51,7 @@ $(function() {
     rowList:[10,20,30],
     viewrecords: true,
     gridview: true,
-    caption: 'Zhongwen: My Words',
+    caption: 'Zhongwen: Meine W&ouml;rter',
     autowidth: true,
     height: '100%',
     emptyrecords: "No words",
@@ -103,10 +106,10 @@ $('#delete').click(function(e) {
                 
 $('#help').click(function(e) {
     $('#helpmsg').toggle('bounce', function() {
-        if ($('#help').text() == 'Show help') {
-            $('#help').text('Hide help');
+        if ($('#help').text() == 'Hilfe anzeigen') {
+            $('#help').text('Hilfe ausblenden');
         } else {
-            $('#help').text('Show help');
+            $('#help').text('Hilfe anzeigen');
         }
     }
     );

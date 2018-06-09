@@ -1,12 +1,15 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2012 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+    Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+    Copyright (C) 2011-2013 Christian Schiller
+    https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+
+    German version of the Chinese-English Zhongwen Popup-Dictionary
+    https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 */
 
 function loadVals() {
     var storedValue = localStorage['popupcolor'];
-    for (var i = 0; i < document.optform.popupcolor.length; i++) {
+    for(var i=0; i < document.optform.popupcolor.length; ++i) {
         if(document.optform.popupcolor[i].value == storedValue) {
             document.optform.popupcolor[i].selected = true;
             break;
@@ -44,14 +47,6 @@ function loadVals() {
     else {
         document.optform.zhuyin[0].selected = true;
     }
-
-    storedValue = localStorage['grammar'];
-    if(storedValue == 'no') {
-        document.optform.grammar[1].selected = true;
-    }
-    else {
-        document.optform.grammar[0].selected = true;
-    }
 }
 
 function storeVals() {
@@ -69,9 +64,6 @@ function storeVals() {
 
     localStorage['zhuyin'] = document.optform.zhuyin.value;
     chrome.extension.getBackgroundPage().zhongwenMain.config.zhuyin = localStorage['zhuyin'];
-
-    localStorage['grammar'] = document.optform.grammar.value;
-    chrome.extension.getBackgroundPage().zhongwenMain.config.grammar = localStorage['grammar'];
 }
 
 $(function() {

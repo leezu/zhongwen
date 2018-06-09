@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Zhongwen Word List</title>
+        <title>Zhongwen Wortliste</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.8.18.custom.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
-        <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
-        <script src="js/jquery-migrate-1.4.1.min.js" type="text/javascript"></script>
+        <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
         <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
         <script src="js/wordlist.js" type="text/javascript"></script>
 
@@ -17,40 +16,51 @@
         <table id='words'></table>
         <p>
         <div id='nodata'>
-            You haven't saved any words yet.
-            <p>You can save words by
-                using the 'r' key on the keyboard when the popup translation is being displayed.</p>
+            Sie haben noch keine W&ouml;rter gespeichert.
+            <p>Sie k&ouml;nnen W&ouml;rter zur Liste hinzuf&uuml;gen, indem Sie
+                die Taste 'r' auf Ihrer Tastatur dr&uuml;chen, w&auml;hrend
+                das Popup-Fenster mit der &Uuml;bersetzung angezeigt wird.</p>
         </div>
 
         <table width='100%' border='0' cellpadding='0' cellspacing='0'>
             <tr>
                 <td align='left'>
-                    <a hidden id='savelink' download='Zhongwen-Words.txt'></a>
-                    <button id='savebutton'>Save selected rows</button>
+                    <a hidden id='savelink' download='Zhongwen-Wortliste.txt'></a>
+                    <button id='savebutton'>Speichern der ausgew&auml;hlten Zeilen</button>
                 </td>
                 <td align='right'>
-                    <button id='delete'>Delete selected rows</button>
+                    <button id='delete'>L&ouml;schen der ausgew&auml;hlten Zeilen</button>
                 </td>
             </tr>
         </table>
 
         <p>
-            <a id='help' href="javascript: void(0)">Show help</a>
+            <a id='help' href="javascript: void(0)">Hilfe anzeigen</a>
         </p>
 
         <div id='helpmsg' style='width: 600px; background: lightblue; display: none; padding: 10px; border-radius: 5px;'>
-            You can select individual rows by clicking on them. 
-            Selected rows are highlighted in yellow. By clicking
-            on the topmost checkbox you can also select all the rows
-            at once. Selected rows can be saved to a file by clicking on the
-            link below the table. You can also delete selected rows by
-            clicking on the link at the bottom right of the table.
+            Sie k&ouml;nnen einzelne Zeilen ausw&auml;hlen, indem Sie sie
+            anklicken. Ausgew&auml;hlte Zeilen werden in gelber Farbe dargestellt.
+            Durch Anklicken der obersten Checkbox k&ouml;nnen Sie alle
+            Zeilen gleichzeitig ausw&auml;hlen oder die Auswahl r&uuml;ckg&auml;ngig
+            machen.
             <p>
-                By clicking on the column headers you can sort the rows
-                in ascending or descending order.
+                Ausgew&auml;hlte Zeilen k&ouml;nnen in einer Datei gespeichert werden,
+                indem Sie auf den Link zum Speichern klicken.
             </p>
             <p>
-                For technical reasons the Zhongwen popup doesn't work on this page.
+                Durch Klicken auf den Link zum L&ouml;schen rechts unterhalb
+                der Tabelle werden die ausgew&auml;hlten Zeilen aus der Tabelle
+                entfernt. Vorsicht: Das L&ouml;schen kann nicht r&uuml;ckg&auml;ngig
+                gemacht werden.
+            </p>
+            <p>
+                Beim Klicken auf die Spalten&uuml;berschriften werden die Zeilen
+                der Tabelle auf- bzw. absteigend nach der jeweiligen Spalte sortiert.
+            </p>
+            <p>
+                Hinweis: Aus technischen Gr&uuml;nden funktioniert das
+                Popup-Fenster zum &Uuml;bersetzen auf dieser Seite nicht.
             </p>
         </div>
     </body>

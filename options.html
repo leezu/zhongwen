@@ -1,99 +1,97 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="css/options.css" />
-  <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+  <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
   <script src="js/options.js" type="text/javascript"></script>
 </head>
 <body>
-  <h2>Options for the Zhongwen Chrome Extension</h2>
+  <h2>Einstellungen f&uuml;r das Zhongwen Chinesisch-Deutsch W&ouml;rterbuch</h2>
 
-  On this page you can set your personal preferences for the Zhongwen
-  Chinese Popup Dictionary Chrome extension.
+  Auf dieser Seite k&ouml;nnen einige Voreinstellungen des Popup-W&ouml;rterbuchs
+  den eigenen Vorstellungen gem&auml;&szlig; angepasst werden.
 
   <p>
 
-  <div class="important">Important:
-      <ol>
-          <li>
-            Don't forget to save your changes by clicking on the "Save these settings" button.
-          <li>
-            If you change the color of the popup window and you still see the
-            old popup window color, then simply reload the Chinese page for the
-            change to become visible.
-      </ol>
+  <div class="important">Wichtige Hinweise:
+    <ol>
+      <li>
+        Vergessen Sie nicht, Ihre &Auml;nderungen durch Klicken auf die
+        "Speichern" Schaltfl&auml;che festzuschreiben, ansonsten
+        werden die &Auml;nderungen nicht &uuml;bernommen!
+      <li>
+        Nach &Auml;nderung der Farbe des Popup-Fensters ist es evtl.
+        n&ouml;tig, Zhongwen einmal kurz durch Klick auf das
+        Icon zu deaktivieren. Nach erneutem Aktivieren ist dann die
+        neue Farbe in allen Fenstern sichtbar.
+    </ol>
   </div>
 
   <hr>
   <form id="optform" name="optform">
-    The <b>Popup color</b> setting allows you to change the background
-    color of the window showing the dictionary entries.
+    Die Einstellung der <b>Hintergrundfarbe</b> erlaubt es, die Farbe
+    des Popup-Fensters anzupassen, in dem die &Uuml;bersetzung erscheint.
     <p>
-    Popup color:
+      Hintergrundfarbe:
       <select id="popupcolor" name="popupcolor">
-        <option value="blue">Blue</option>
-        <option value="lightblue">Light Blue</option>
-        <option value="black">Black</option>
-        <option value="yellow">Yellow</option>
+        <option value="blue">blau</option>
+        <option value="lightblue">hellblau</option>
+        <option value="black">schwarz</option>
+        <option value="yellow">gelb</option>
       </select>
     <p>
-    <hr>
-    The <b>Tone colors</b> setting allows you to turn colors for the
-    pinyin syllables on and off. If tone colors are turned on, you will
-    see colors corresponding to the tones of the characters:
-    red = first tone, orange = second tone, green = third tone,
-    blue = fourth tone.
+      <hr>
+      Mittels der <b>Tonfarben</b>&ndash;Einstellung kann die Darstellung der
+      verschiedenen Pinyin-Silben in einer vom Ton abh&auml;ngigen
+      Farbe aktiviert bzw. deaktiviert werden. Falls Tonfarben verwendet
+      werden sollen, kommen folgende Farben zum Einsatz:
+      rot = 1. Ton, orange = 2. Ton, gr&uuml;n = 3. Ton, blau = 4. Ton
     <p>
-    Tone colors:
+      Tonfarben:
       <select id="tonecolors" name="tonecolors">
-        <option value="yes">Show tone colors</option>
-        <option value="no">Don't show tone colors</option>
+        <option value="yes">Tonfarben verwenden</option>
+        <option value="no">Keine Tonfarben verwenden</option>
       </select>
     <p>
-    <hr>
-    The <b>Font size</b> setting allows you to change the size of the
-    characters in the popup window.
+      <hr>
+      Die Einstellung der <b>Schriftgr&ouml;&szlig;e</b> beeinflusst die Gr&ouml;&szlig;e
+      der dargestellten chinesischen Zeichen im Popup-Fenster. Insbesondere
+      beim Lernen von traditionellen Zeichen mit vielen Strichen kann eine
+      gr&ouml;&szlig;ere Schriftgr&ouml;&szlig;e hilfreich sein.
     <p>
-    Font size:
+      Schriftgr&ouml;&szlig;e:
       <select id="fontSize" name="fontSize">
-        <option value="large">Use a large font size</option>
-        <option value="small">Use a smaller font size</option>
+        <option value="large">gro&szlig;e Schrift</option>
+        <option value="small">kleinere Schrift</option>
       </select>
     <p>
-    <hr>
-    The <b>Skritter domain</b> setting allows you to change the URL that is
-    used for adding words to your Skritter queue (Skritter login required).
-    By default, <code>skritter.com</code> is being used, but for some users
-    <code>skritter.cn</code> might work better.
+      <hr>
+      Die Einstellung der <b>Skritter Domain</b> beeinflusst die URL, &uuml;ber die
+      W&ouml;rter in die Skritter Vokabelliste &uuml;bernommen werden.
+      (Anmeldung bei Skritter erforderlich).
+      Standardm&auml;&szlig;ig wird <code>skritter.com</code> benutzt, aber
+      in manchen Situationen kann es sein, dass <code>skritter.cn</code>
+      besser funktioniert. Im Zweifelsfall sollte <code>skritter.com</code>
+      ausgew&auml;hlt werden.
     <p>
-    Skritter domain:
+      Skritter Domain:
       <select id="skritterTLD" name="skritterTLD">
         <option value="com">skritter.com</option>
         <option value="cn">skritter.cn</option>
       </select>
     <p>
-    <hr>
-    The <b>Show Zhuyin</b> setting allows you to turn on Zhuyin (Bopomofo)
-    phonetic symbols.
+      <hr>
+      Die Einstellung <b>Zhuyin anzeigen</b> erlaubt es, die Zhuyin (Bopomofo)
+      Lautschrift zus&auml;tzlich zu Hanyu Pinyin anzuzeigen.
     <p>
-    Show Zhuyin (Bopomofo):
+      Zhuyin (Bopomofo) anzeigen:
       <select id="zhuyin" name="zhuyin">
-        <option value="no">no</option>
-        <option value="yes">yes</option>
+        <option value="no">nein</option>
+        <option value="yes">ja</option>
       </select>
     <p>
     <hr>
-    The <b>Show grammar and usage notes</b> setting allows you to turn on grammar
-    and usage notes.
-    <p>
-      Show grammar and usage notes:
-      <select id="grammar" name="grammar">
-        <option value="yes">yes</option>
-        <option value="no">no</option>
-      </select>
-    <p>
-    <hr>
-    <input id="save" style="margin-top: 1em;" type="submit" value="Save these settings" />
-    <span class="important">Save your changes here</span>
+    <input id="save" style="margin-top: 1em;" type="submit" value="&Auml;nderungen speichern" />
+    <span class="important">Speichern Sie Ihre &Auml;nderungen hier.</span>
   </form>
 
 </body>

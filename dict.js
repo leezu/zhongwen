@@ -1,7 +1,10 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+        Copyright (C) 2011-2013 Christian Schiller
+        https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+
+        German version of the Chinese-English Zhongwen Popup-Dictionary
+        https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
         ---
 
@@ -53,8 +56,6 @@ zhongwenDict.prototype = {
     wordDict: undefined,
     wordIndex: undefined,
 
-    grammarKeywords: {},
-
     fileRead: function(url) {
         var req = new XMLHttpRequest();
         req.open("GET", url, false);
@@ -83,15 +84,8 @@ zhongwenDict.prototype = {
     },
 
     loadDictionary: function() {
-        this.wordDict = this.fileRead(chrome.extension.getURL("data/cedict_ts.u8"));
-        this.wordIndex = this.fileRead(chrome.extension.getURL("data/cedict.idx"));
-
-        var grammarKeywordFile = this.fileRead(chrome.extension.getURL("data/grammarKeywordsMin.json"));
-        this.grammarKeywords = JSON.parse(grammarKeywordFile);
-    },
-
-    hasKeyword: function (keyword) {
-        return this.grammarKeywords[keyword];
+        this.wordDict = this.fileRead(chrome.extension.getURL("data/handedict.u8"));
+        this.wordIndex = this.fileRead(chrome.extension.getURL("data/handedict.idx"));
     },
     
     wordSearch: function(word, max) {
@@ -100,8 +94,8 @@ zhongwenDict.prototype = {
         var dict = this.wordDict;
         var index = this.wordIndex;
         var maxTrim = 7;
-        var cache = {};
-        var have = {};
+        var cache = [];
+        var have = [];
         var count = 0;
         var maxLen = 0;
 
@@ -138,7 +132,7 @@ zhongwenDict.prototype = {
                 ++count;
                 if (maxLen == 0) maxLen = word.length;
 
-                entry.data.push([dentry, word]);
+                entry.data.push([dentry, null]);
             } // for j < ix.length
             if (count >= maxTrim) break;
             word = word.substr(0, word.length - 1);

@@ -1,7 +1,10 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+        Copyright (C) 2011-2013 Christian Schiller
+        https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+
+        German version of the Chinese-English Zhongwen Popup-Dictionary
+        https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
         ---
 
@@ -325,22 +328,6 @@ var zhongwenContent = {
                     }
                 }
                 break;
-
-            case 71:        // g
-                if (window.zhongwen.config.grammar != 'no' && this.isVisible() && this.lastFound.grammar) {
-                    var sel = encodeURIComponent(
-                        window.getSelection().toString());
-
-                    // http://resources.allsetlearning.com/chinese/grammar/%E4%B8%AA
-                    var allset = 'http://resources.allsetlearning.com/chinese/grammar/' + sel;
-
-                    chrome.extension.sendRequest({
-                        type: 'open',
-                        url: allset
-                    });
-                }
-                break;
-
             case 77:        // m
                 window.zhongwen.uofsNext = 1;
             // falls through
@@ -359,7 +346,6 @@ var zhongwenContent = {
                     }
                 }
                 break;
-
             case 82:        // r
                 
                 var entries = [];
@@ -376,8 +362,8 @@ var zhongwenContent = {
                     "type": "add",
                     "entries": entries
                 });
-                
-                this.showPopup("Added to word list.<p>Press Alt+W to open word list.", null, -1, -1);
+
+                this.showPopup("Zur Wortliste hinzugef&uuml;gt.<p>Alt+W dr&uuml;cken, um die Wortliste anzuzeigen.", null, -1, -1);
 
                 break;
                 
@@ -386,13 +372,13 @@ var zhongwenContent = {
 
                     // http://www.skritter.com/vocab/api/add?from=Chrome&lang=zh&word=浏览&trad=瀏 覽&rdng=liú lǎn&defn=to skim over; to browse
                 
-                    var skritter = 'http://legacy.skritter.com';
+                    var skritter = 'http://www.skritter.com';
                     if (window.zhongwen.config.skritterTLD == 'cn') {
-                        skritter = 'http://legacy.skritter.cn';
+                        skritter = 'http://www.skritter.cn';
                     }
 
                     skritter +=
-                    '/vocab/api/add?from=Zhongwen&siteref=Zhongwen&lang=zh&word=' +
+                    '/vocab/api/add?from=Zhongwen&siteref=Zhongwen&lang=zh&source_lang=de&word=' +
                     encodeURIComponent(this.lastFound[0][0]) +
                     '&trad=' + encodeURIComponent(this.lastFound[0][1]) +
                     '&rdng=' + encodeURIComponent(this.lastFound[0][4]) +
@@ -446,20 +432,6 @@ var zhongwenContent = {
                     });
                 }
                 break;
-            // case 50:     // 2
-            //     if (ev.altKey) {
-            //         sel = encodeURIComponent(
-            //             window.getSelection().toString());
-            //
-            //         // http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=%E4%B8%AD
-            //         var yellow = 'http://www.yellowbridge.com/chinese/wordsearch.php?searchMode=C&word=' + sel;
-            //
-            //         chrome.extension.sendRequest({
-            //             type: 'open',
-            //             url: yellow
-            //         });
-            //     }
-            //     break;
             case 51:     // 3
                 if (ev.altKey) {
                     sel = encodeURIComponent(
@@ -521,12 +493,12 @@ var zhongwenContent = {
                     sel = encodeURIComponent(
                         window.getSelection().toString());
 
-                    // https://www.moedict.tw/~%E4%B8%AD%E6%96%87
-                    var moedict = 'https://www.moedict.tw/~' + sel;
+                    // http://test.2u4u.com.cn/online/online_dict_new.php?lang=en&word=%E8%AF%8D%E5%85%B8
+                    var fltrp = 'http://test.2u4u.com.cn/online/online_dict_new.php?lang=en&word=' + sel;
 
                     chrome.extension.sendRequest({
                         type: 'open',
-                        url: moedict
+                        url: fltrp
                     });
                 }
                 break;
@@ -534,9 +506,9 @@ var zhongwenContent = {
                 return;
         }
 
-        if (ev.keyCode != 71 && ev.keyCode != 83 && ev.keyCode != 84 && ev.keyCode != 87 &&
+        if (ev.keyCode != 83 && ev.keyCode != 84 && ev.keyCode != 87 && 
             (ev.keyCode < 49 || 57 < ev.keyCode)) {
-            // don't do this for opening a new Grammar, Skritter, Tatoeba or dictionary tab,
+            // don't do this for opening a new Skritter, Tatoeba or dictionary tab,
             // or the wordlist, because onKeyUp won't be called
             this.keysDown[ev.keyCode] = 1;
         }
@@ -819,7 +791,6 @@ var zhongwenContent = {
         tdata.clientY = ev.clientY;
 
         var range = document.caretRangeFromPoint(ev.clientX, ev.clientY);
-        if (range == null) return;
         var rp = range.startContainer;
         var ro = range.startOffset;
 
@@ -936,7 +907,7 @@ var zhongwenContent = {
         if (entry == null) return '';
 
         for (var i = 0; i < entry.data.length; ++i) {
-            e = entry.data[i][0].match(/^([^\s]+?)\s+([^\s]+?)\s+\[(.*?)\]?\s*\/(.+)\//);
+            e = entry.data[i][0].match(/^([^\s]+?)\s+([^\s]+?)\s+(?:\[(.*?)\])?\s*\/(.+)\//);
             if (!e) continue;
 
             // Hanzi
@@ -974,11 +945,6 @@ var zhongwenContent = {
             var translation = e[4].replace(/\//g, '; ');
             html += '<br><span class="' + defClass + '">' + translation + '</span><br>';
 
-            // Grammar
-            if (window.zhongwen.config.grammar != 'no' && entry.grammar && entry.grammar.index == i) {
-                html += '<br><span class="grammar">Press "g" for grammar and usage notes.</span><br><br>'
-            }
-
             texts[i] = [e[2], e[1], p[1], translation, e[3]];
         }
         if (entry.more) {
@@ -986,7 +952,6 @@ var zhongwenContent = {
         }
 
         this.lastFound = texts;
-        this.lastFound.grammar = entry.grammar;
 
         return html;
     },
@@ -1046,7 +1011,7 @@ var zhongwenContent = {
         var text = '';
         var html = ''
         var zhuyin = '';
-        var a = syllables.split(/[\s·]+/);
+        var a = syllables.split(/\s/);
         for (var i = 0; i < a.length; i++) {
             var syllable = a[i];
             

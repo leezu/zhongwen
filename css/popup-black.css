@@ -22,7 +22,7 @@
 
 #zhongwen-window {
   position: absolute;
-  z-index: 999999999;
+  z-index: 7777;
   border: 1px solid #D0D0D0 !important;
   padding: 4px;
   background: #000000;
@@ -91,9 +91,4 @@
 
 #zhongwen-window .tone5 {
   color: #A0A0A0;
-}
-
-#zhongwen-window .grammar {
-  font-weight: bold;
-  color: lightblue;
 }

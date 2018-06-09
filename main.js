@@ -1,7 +1,10 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+        Copyright (C) 2011-2013 Christian Schiller
+        https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+
+        German version of the Chinese-English Zhongwen Popup-Dictionary
+        https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
         ---
 
@@ -51,36 +54,39 @@ var zhongwenMain = {
     tabIDs: {},
 
     miniHelp:
-    '<span style="font-weight: bold;">Zhongwen Chinese-English Dictionary&nbsp;&nbsp;&nbsp;</span><br><br>' +
-    '<p>' +
-    'Keyboard shortcuts:' +
-    '<p>' +
-    '<table style="margin: 20px;" cellspacing=5 cellpadding=5>' +
-    '<tr><td><b>N&nbsp;:</b></td><td>&nbsp;Next word</td></tr>' +
-    '<tr><td><b>B&nbsp;:</b></td><td>&nbsp;Previous character</td></tr>' +
-    '<tr><td><b>M&nbsp;:</b></td><td>&nbsp;Next character</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>A&nbsp;:</b></td><td>&nbsp;Alternate popup location</td></tr>' +
-    '<tr><td><b>Y&nbsp;:</b></td><td>&nbsp;Move popup location down</td></tr>' +
-    '<tr><td><b>X&nbsp;:</b></td><td>&nbsp;Move popup location up</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>C&nbsp;:</b></td><td>&nbsp;Copy to clipboard</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>S&nbsp;:</b></td><td>&nbsp;Add word to Skritter queue</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>R&nbsp;:</b></td><td>&nbsp;Remember word by adding it to the internal word list</td></tr>' +
-    '<tr><td><b>Alt + W&nbsp;:</b></td><td>&nbsp;Show the word list</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td colspan=2>Look up selected text in online resource:</td></tr>' +
-    '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
-    '<tr><td><b>Alt + 1&nbsp;:</b></td><td>&nbsp;nciku</td></tr>' +
-//  '<tr><td><b>Alt + 2&nbsp;:</b></td><td>&nbsp;YellowBridge</td></tr>' +
-    '<tr><td><b>Alt + 3&nbsp;:</b></td><td>&nbsp;Dict.cn</td></tr>' +
-    '<tr><td><b>Alt + 4&nbsp;:</b></td><td>&nbsp;iCIBA</td></tr>' +
-    '<tr><td><b>Alt + 5&nbsp;:</b></td><td>&nbsp;MDBG</td></tr>' +
-    '<tr><td><b>Alt + 6&nbsp;:</b></td><td>&nbsp;JuKuu</td></tr>' +
-    '<tr><td><b>T&nbsp;:</b></td><td>&nbsp;Tatoeba</td></tr>' +
-    '</table>',
+        '<span style="font-weight: bold;">Zhongwen Chinesisch-Deutsch W&ouml;rterbuch&nbsp;&nbsp;&nbsp;</span><br><br>' +
+        '<p>' +
+        '<span style="font-style: italic; font-weight: bold;">Neu: </span>' +
+        '<span style="font-style: italic;">Zhongwen kann auch Text in Eingabefeldern &uuml;bersetzen,<br>' +
+        ' hierf&uuml;r einfach die Alt-Taste gedr&uuml;ckt halten.</span><br><br>' +
+        '<p>' +
+        'Tastaturk&uuml;rzel:' +
+        '<p>' +
+        '<table style="margin: 20px;" cellspacing=5 cellpadding=5>' +
+        '<tr><td><b>N&nbsp;:</b></td><td>&nbsp;N&auml;chstes Wort</td></tr>' +
+        '<tr><td><b>B&nbsp;:</b></td><td>&nbsp;Vorheriges Zeichen</td></tr>' +
+        '<tr><td><b>M&nbsp;:</b></td><td>&nbsp;N&auml;chstes Zeichen</td></tr>' +
+        '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+        '<tr><td><b>A&nbsp;:</b></td><td>&nbsp;Andere Position des Popup-Fensters</td></tr>' +
+        '<tr><td><b>Y&nbsp;:</b></td><td>&nbsp;Schiebe Popup-Fenster nach unten</td></tr>' +
+        '<tr><td><b>X&nbsp;:</b></td><td>&nbsp;Schiebe Popup-Fenster nach oben</td></tr>' +
+        '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+        '<tr><td><b>C&nbsp;:</b></td><td>&nbsp;Wort mit &Uuml;bersetzung in die Zwischenablage kopieren</td></tr>' +
+        '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+        '<tr><td><b>S&nbsp;:</b></td><td>&nbsp;Wort zum Lernen bei Skritter vormerken</td></tr>' +
+        '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+        '<tr><td><b>R&nbsp;:</b></td><td>&nbsp;Wort zu interner Wortliste hinzuf&uuml;gen</td></tr>' +
+        '<tr><td><b>Alt + W&nbsp;:</b></td><td>&nbsp;Wortliste anzeigen</td></tr>' +
+        '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+        '<tr><td colspan=2>Selektierten Text in Online-W&ouml;rterbuch nachschlagen (englisch):</td></tr>' +
+        '<tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>' +
+        '<tr><td><b>Alt + 1&nbsp;:</b></td><td>&nbsp;nciku</td></tr>' +
+        '<tr><td><b>Alt + 3&nbsp;:</b></td><td>&nbsp;Dict.cn</td></tr>' +
+        '<tr><td><b>Alt + 4&nbsp;:</b></td><td>&nbsp;iCIBA</td></tr>' +
+        '<tr><td><b>Alt + 5&nbsp;:</b></td><td>&nbsp;MDBG</td></tr>' +
+        '<tr><td><b>Alt + 6&nbsp;:</b></td><td>&nbsp;JuKuu</td></tr>' +
+        '<tr><td><b>T&nbsp;:</b></td><td>&nbsp;Tatoeba</td></tr>' +
+        '</table>',
 
     loadDictionary: function() {
         if (!this.dict) {
@@ -140,7 +146,7 @@ var zhongwenMain = {
         
         chrome.contextMenus.create(
         {
-            title: "Open word list",
+            title: "Wortliste anzeigen",
             onclick: function() {
                 var url = chrome.extension.getURL("/wordlist.html");
                 var tabID = zhongwenMain.tabIDs['wordlist'];
@@ -216,18 +222,7 @@ var zhongwenMain = {
 
     search: function(text) {
 
-        var entry = this.dict.wordSearch(text);
-        if (entry != null) {
-            for (var i = 0; i < entry.data.length; i++) {
-                var word = entry.data[i][1];
-                if (this.dict.hasKeyword(word) && (entry.matchLen == word.length)) {
-                    // the final index should be the last one with the maximum length
-                    entry.grammar = { keyword: word, index: i };
-                }
-            }
-        }
-
-        return entry;
+        return this.dict.wordSearch(text);
 
     }
 };

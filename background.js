@@ -1,7 +1,10 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2012 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+        Copyright (C) 2011-2013 Christian Schiller
+        https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+
+        German version of the Chinese-English Zhongwen Popup-Dictionary
+        https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 */
 
 chrome.browserAction.onClicked.addListener(zhongwenMain.enableToggle);
@@ -118,7 +121,6 @@ initStorage("tonecolors", "yes");
 initStorage("fontSize", "small");
 initStorage("skritterTLD", "com");
 initStorage("zhuyin", "no");
-initStorage("grammar", "yes");
 
 zhongwenMain.config = {};
 zhongwenMain.config.css = localStorage["popupcolor"];
@@ -126,7 +128,6 @@ zhongwenMain.config.tonecolors = localStorage["tonecolors"];
 zhongwenMain.config.fontSize = localStorage["fontSize"]
 zhongwenMain.config.skritterTLD = localStorage.skritterTLD;
 zhongwenMain.config.zhuyin = localStorage.zhuyin;
-zhongwenMain.config.grammar = localStorage.grammar;
 
 if (localStorage['enabled'] == 1) {
    zhongwenMain.loadDictionary();
