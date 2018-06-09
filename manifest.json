@@ -25,6 +25,6 @@
    "permissions": [ "tabs", "http://*/*", "contextMenus" ],
    "short_name": "Zhongwen",
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "4.15",
+   "version": "4.16",
    "web_accessible_resources": [ "css/*", "js/*", "images/*" ]
 }
