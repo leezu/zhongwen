@@ -3,40 +3,40 @@
    "background": {
       "scripts": [ "dict.js", "main.js", "background.js" ]
    },
-  "browser_action": {
-     "default_icon": "images/zhongwen48.png",
-     "default_title": "Zhongwen Chinese Popup Dictionary",
-     "browser_style": true
-  },
+   "browser_action": {
+      "default_icon": "images/zhongwen48.png",
+      "default_title": "Zhongwen Chinesisch-Deutsch Popup-Wörterbuch",
+      "browser_style": true
+   },
    "content_scripts": [ {
       "all_frames": true,
       "match_about_blank": true,
       "js": [ "content.js" ],
       "matches": [ "<all_urls>" ]
    } ],
-   "description": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter. Firefox fork of the Christian Schillers Chrome extension.",
+   "description": "Das beliebte Popup-Wörterbuch für chinesische Zeichen, jetzt auch auf Deutsch. Mit integrierter Skritter-Unterstützung.",
    "icons": {
       "128": "images/zhongwen.png",
       "16": "images/zhongwen16.png",
       "48": "images/zhongwen48.png"
    },
   "homepage_url": "https://github.com/leezu/zhongwen",
-   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9kqvX6bQ05nYOOB67oitnTW6arQZbq/nLebcs8f2jwXM7cvZrkNaMtZroysYtDPFIES7yP4/SAsVP4CGKP7z/2o8/BBkqe+8+4Okk5bo23ovpGVSqGlpE63Q58Zkpl6j/GcVpHAlE5thNH7QmBjcAH5ESdt/o2iJaYDbImwthDwIDAQAB",
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIdfNay6vgyCDhnmPoZgMKK3OIYvZJMURxxfObQhCMERvw7cvuiOSpM+GwtVVLUfggtlTIcUmk3SSHjeaI9IG3lNJyu4dnwtyTDOFPIgJK/L255DeGbZI6ONwlfoz1JxoVA4HBuByO4HqMzAILSf26duda2wrLEEsITES26yeehwIDAQAB",
    "manifest_version": 2,
-   "name": "Zhongwen: Chinese-English Dictionary",
+   "name": "Zhongwen: Chinesisch-Deutsch Wörterbuch",
    "options_ui": {
      "page": "options.html",
      "browser_style": true,
      "chrome_style": true
    },
   "permissions": [ "*://*/*", "contextMenus", "storage", "downloads"],
-   "short_name": "Zhongwen",
+   "short_name": "Zhongwen auf Deutsch",
    "update_url": "https://clients2.google.com/service/update2/crx",
   "version": "4.16",
   "web_accessible_resources": [ "css/*", "js/*", "images/*" ],
   "applications": {
     "gecko": {
-      "id": "{b65c7bc6-846b-4f65-b6ed-099d7e042309}",
+      "id": "{83f9cb6c-550a-4769-a645-d0efbcdcb551}",
       "strict_min_version": "55.0"
     }
   },

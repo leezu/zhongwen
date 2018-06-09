@@ -1,8 +1,10 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Original work Copyright (C) 2012 Christian Schiller
-        Modified work Copyright (C) 2017 Leonard Lausen
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+        Copyright (C) 2011-2013 Christian Schiller
+        German version of the Chinese-English Zhongwen Popup-Dictionary
+        https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Modified work Copyright (C) 2018 Leonard Lausen
+        https://github.com/leezu/zhongwen
 */
 
 browser.runtime.onMessage.addListener(function(request, sender, response) {

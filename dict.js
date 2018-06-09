@@ -1,8 +1,10 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Original Work Copyright (C) 2011 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
-        Modified work Copyright (C) 2017 Leonard Lausen
+        Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+        Original Work Copyright (C) 2011-2013 Christian Schiller
+        https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+        German version of the Chinese-English Zhongwen Popup-Dictionary
+        https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+        Modified work Copyright (C) 2018 Leonard Lausen
         https://github.com/leezu/zhongwen
 
         ---
@@ -47,10 +49,10 @@
 */
 async function loadDictData() {
   let wordDict = fetch(browser.extension.getURL(
-    "data/cedict_ts.u8")).then(
+    "data/handedict.u8")).then(
     processText);
   let wordIndex = fetch(browser.extension.getURL(
-    "data/cedict.idx")).then(
+    "data/handedict.idx")).then(
     processText);
   let grammarKeywords = fetch(browser.extension.getURL(
     "data/grammarKeywordsMin.json")).then(processJson);

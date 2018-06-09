@@ -1,8 +1,12 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Original work Copyright (C) 2012 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
-        Modified work Copyright (C) 2017 Leonard Lausen
+        Zhongwen - Ein Chinesisch-Deutsch Popup-Wörterbuch
+        Original work Copyright (C) 2011-2013 Christian Schiller
+        https://chrome.google.com/webstore/detail/jjkbnbgakjgfiajfkifdbhbfmjgmddeh
+
+        German version of the Chinese-English Zhongwen Popup-Dictionary
+        https://chrome.google.com/webstore/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+
+        Modified work Copyright (C) 2018 Leonard Lausen
         https://github.com/leezu/zhongwen
 
         ---
@@ -362,10 +366,10 @@ var zhongwenContent = {
 
                 var fragment = document.createDocumentFragment();
                 var p1 = document.createElement("p");
-                var p1text = document.createTextNode("Added to word list.");
+                var p1text = document.createTextNode("Zur Wortliste hinzugefügt.");
                 p1.appendChild(p1text);
                 var p2 = document.createElement("p");
-                var p2text = document.createTextNode("Press Alt+W to open word list.");
+                var p2text = document.createTextNode("Alt+W drücken, um die Wortliste anzuzeigen.");
                 p2.appendChild(p2text);
                 fragment.appendChild(p1);
                 fragment.appendChild(p2);
@@ -385,7 +389,7 @@ var zhongwenContent = {
                     }
 
                     skritter +=
-                    '/vocab/api/add?from=Zhongwen&siteref=Zhongwen&lang=zh&word=' +
+                    '/vocab/api/add?from=Zhongwen&siteref=Zhongwen&lang=zh&source_lang=de&word=' +
                     encodeURIComponent(this.lastFound[0][0]) +
                     '&trad=' + encodeURIComponent(this.lastFound[0][1]) +
                     '&rdng=' + encodeURIComponent(this.lastFound[0][4]) +
