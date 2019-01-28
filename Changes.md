@@ -1,4 +1,24 @@
 # Change Log
+## 4.19.1
+- Allow displaying only simplified or traditional characters instead of both in
+  the popup (fixes #22, thanks to @CNurt)
+- Fix display of zhuyin with umlauts (fixes #20, thanks to @CNurt)
+
+## 4.19
+- Update CC-CEDICT dictionary
+
+## 4.18
+- Update CC-CEDICT dictionary
+
+## 4.17
+- Update CC-CEDICT dictionary
+
+## 4.16
+- Update CC-CEDICT dictionary
+
+## 4.15
+- Update CC-CEDICT dictionary
+
 ## 4.14.2
 - Option to toggle Zhongwen via keyboard shortcut
 
