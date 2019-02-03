@@ -50,7 +50,7 @@ var zhongwenContent = {
 
     altView: 0,
 
-    lastFound: null,
+    lastFound: '',
 
     keysDown: [],
 
@@ -941,7 +941,9 @@ var zhongwenContent = {
 
     makeFragment: function(entry, showToneColors) {
         var e;
+        var word;
         var texts = [];
+        var hanziClass;
         var fragment = document.createDocumentFragment();
 
       if (entry == null) return fragment;
@@ -952,19 +954,36 @@ var zhongwenContent = {
 
             // Hanzi
 
-            var hanziClass = 'w-hanzi';
-            if (window.zhongwen.config.fontSize == 'small') {
-                hanziClass += '-small';
-            }
-            var hanziSpan = document.createElement('span');
-            hanziSpan.textContent = e[2];
-            hanziSpan.className = hanziClass;
-            fragment.appendChild(hanziSpan);
-            if (e[1] != e[2]) {
-                var hanziSpan2 = document.createElement('span');
-                hanziSpan2.textContent = e[1];
-                hanziSpan2.className = hanziClass;
-                fragment.appendChild(hanziSpan2);
+            if (window.zhongwen.config.simpTrad == 'auto') {
+
+                word = entry.data[i][1];
+
+                hanziClass = 'w-hanzi';
+                if (window.zhongwen.config.fontSize == 'small') {
+                    hanziClass += '-small';
+                }
+                var hanziSpan = document.createElement('span');
+                hanziSpan.textContent = e[2];
+                hanziSpan.className = hanziClass;
+                fragment.appendChild(hanziSpan);
+
+            } else {
+
+                hanziClass = 'w-hanzi';
+                if (window.zhongwen.config.fontSize == 'small') {
+                    hanziClass += '-small';
+                }
+                var hanziSpan = document.createElement('span');
+                hanziSpan.textContent = e[2];
+                hanziSpan.className = hanziClass;
+                fragment.appendChild(hanziSpan);
+                if (e[1] != e[2]) {
+                    var hanziSpan2 = document.createElement('span');
+                    hanziSpan2.textContent = e[1];
+                    hanziSpan2.className = hanziClass;
+                    fragment.appendChild(hanziSpan2);
+                }
+
             }
 
             // Pinyin

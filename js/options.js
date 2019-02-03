@@ -9,12 +9,13 @@
 function restoreOptions() {
   var optionsPromise = browser.storage.sync.get({
     options: {
-      'popupcolor': "yellow",
-      'tonecolors': "yes",
-      'fontSize': "small",
-      'skritterTLD': "com",
-      'zhuyin': "no",
-      'grammar': "yes"
+      'popupcolor': 'yellow',
+      'tonecolors': 'yes',
+      'fontSize': 'small',
+      'skritterTLD': 'com',
+      'zhuyin': 'no',
+      'grammar': 'yes',
+      'simpTrad': 'classic',
     }
   });
   optionsPromise.then((storage) => {
@@ -56,6 +57,11 @@ function restoreOptions() {
     } else {
       document.optform.grammar[0].selected = true;
     }
+    if (options.simpTrad == 'auto') {
+      document.optform.simpTrad[1].selected = true;
+    } else {
+      document.optform.simpTrad[0].selected = true;
+    }
   });
 }
 
@@ -66,7 +72,8 @@ function saveOptions() {
     'fontSize': document.optform.fontSize.value,
     'skritterTLD': document.optform.skritterTLD.value,
     'zhuyin': document.optform.zhuyin.value,
-    'grammar': document.optform.grammar.value
+    'grammar': document.optform.grammar.value,
+    'simpTrad': document.optform.simpTrad.value
   };
   let setting = browser.storage.sync.set({
     options
