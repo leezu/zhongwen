@@ -75,7 +75,6 @@ var zhongwenMain = {
             if (storage.enabled === 1) {
                 let optionsPromise = browser.storage.sync.get({
                     options: {
-                        'hanziSimplTrad': "both",
                         'popupcolor': "yellow",
                         'tonecolors': "yes",
                         'fontSize': "small",
@@ -97,7 +96,6 @@ var zhongwenMain = {
   enable: function(tab) {
     let optionsPromise = browser.storage.sync.get({
       options: {
-        'hanziSimplTrad': "both",
         'popupcolor': 'yellow',
         'tonecolors': 'yes',
         'fontSize': 'small',

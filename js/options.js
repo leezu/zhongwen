@@ -9,7 +9,6 @@
 function restoreOptions() {
   var optionsPromise = browser.storage.sync.get({
     options: {
-      'hanziSimplTrad': "both",
       'popupcolor': "yellow",
       'tonecolors': "yes",
       'fontSize': "small",
@@ -20,19 +19,6 @@ function restoreOptions() {
   });
   optionsPromise.then((storage) => {
     let options = storage.options;
-
-
-    switch(options.hanziSimplTrad) {
-      case 'simpl':
-        document.optform.hanziSimplTrad[1].selected = true;
-        break;
-      case 'trad':
-        document.optform.hanziSimplTrad[2].selected = true;
-        break;
-      default:
-        document.optform.hanziSimplTrad[0].selected = true;
-    } 
-
     for (var i = 0; i < document.optform.popupcolor.length; i++) {
       if (document.optform.popupcolor[i].value ==
         options.popupcolor) {
@@ -75,7 +61,6 @@ function restoreOptions() {
 
 function saveOptions() {
   let options = {
-    'hanziSimplTrad': document.optform.hanziSimplTrad.value,
     'popupcolor': document.optform.popupcolor.value,
     'tonecolors': document.optform.tonecolors.value,
     'fontSize': document.optform.fontSize.value,

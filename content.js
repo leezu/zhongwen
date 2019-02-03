@@ -956,13 +956,11 @@ var zhongwenContent = {
             if (window.zhongwen.config.fontSize == 'small') {
                 hanziClass += '-small';
             }
-            if (window.zhongwen.config.hanziSimplTrad=='both' || window.zhongwen.config.hanziSimplTrad=='simpl') { // simplified hanzi
-                var hanziSpan = document.createElement('span');
-                hanziSpan.textContent = e[2];
-                hanziSpan.className = hanziClass;
-                fragment.appendChild(hanziSpan);
-            }
-            if ( (e[1] != e[2]) && ((window.zhongwen.config.hanziSimplTrad=='both' || window.zhongwen.config.hanziSimplTrad=='trad')) || (window.zhongwen.config.hanziSimplTrad=='trad') ) { // traditional hanzi
+            var hanziSpan = document.createElement('span');
+            hanziSpan.textContent = e[2];
+            hanziSpan.className = hanziClass;
+            fragment.appendChild(hanziSpan);
+            if (e[1] != e[2]) {
                 var hanziSpan2 = document.createElement('span');
                 hanziSpan2.textContent = e[1];
                 hanziSpan2.className = hanziClass;
