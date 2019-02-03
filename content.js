@@ -48,7 +48,7 @@ var zhongwenContent = {
 
     altView: 0,
 
-    lastFound: null,
+    lastFound: '',
 
     keysDown: [],
 
@@ -930,8 +930,10 @@ var zhongwenContent = {
     makeHtml: function(entry, showToneColors) {
 
         var e;
+        var word;
         var html = '';
         var texts = [];
+        var hanziClass;
 
         if (entry == null) return '';
 
@@ -941,13 +943,27 @@ var zhongwenContent = {
 
             // Hanzi
 
-            var hanziClass = 'w-hanzi';
-            if (window.zhongwen.config.fontSize == 'small') {
-                hanziClass += '-small';
-            }
-            html += '<span class="' + hanziClass + '">' + e[2] + '</span>&nbsp;';
-            if (e[1] != e[2]) {
-                html += '<span class="' + hanziClass + '">' + e[1] + '</span>&nbsp;';
+            if (window.zhongwen.config.simpTrad == 'auto') {
+
+                word = entry.data[i][1];
+
+                hanziClass = 'w-hanzi';
+                if (window.zhongwen.config.fontSize == 'small') {
+                    hanziClass += '-small';
+                }
+                html += '<span class="' + hanziClass + '">' + word + '</span>&nbsp;';
+
+            } else {
+
+                hanziClass = 'w-hanzi';
+                if (window.zhongwen.config.fontSize == 'small') {
+                    hanziClass += '-small';
+                }
+                html += '<span class="' + hanziClass + '">' + e[2] + '</span>&nbsp;';
+                if (e[1] != e[2]) {
+                    html += '<span class="' + hanziClass + '">' + e[1] + '</span>&nbsp;';
+                }
+
             }
 
             // Pinyin
@@ -1104,7 +1120,7 @@ var zhongwenContent = {
     },
     
     zhuyinTones : ['?', '', '\u02CA', '\u02C7', '\u02CB', '\u30FB'],
-    
+
     zhuyinMap : {
         'a': '\u311a',
         'ai': '\u311e',
@@ -1289,11 +1305,11 @@ var zhongwenContent = {
         'long': '\u310c\u3128\u3125',
         'lou': '\u310c\u3121',
         'lu': '\u310c\u3128',
-        'l': '\u310c\u3128\u3122',
+        'lu:': '\u310c\u3129',
         'luan': '\u310c\u3128\u3123',
-        'le': '\u310c\u3128\u311b',
+        'lu:e': '\u310c\u3129\u311d',
         'lun': '\u310c\u3129',
-        'ln': '\u310c\u3129\u311d',
+        'lu:n': '\u310c\u3129\u3123',
         'luo': '\u310c\u3129\u3123',
         'ma': '\u3107\u311a',
         'mai': '\u3107\u311e',
@@ -1335,9 +1351,9 @@ var zhongwenContent = {
         'nong': '\u310b\u3128\u3125',
         'nou': '\u310b\u3121',
         'nu': '\u310b\u3128',
-        'n': '\u310b\u3128\u3122',
+        'nu:': '\u310b\u3129',
         'nuan': '\u310b\u3128\u3123',
-        'ne': '\u310b\u3128\u311b',
+        'nu:e': '\u310b\u3129\u311d',
         'nun': '\u310b\u3129',
         'nuo': '\u310b\u3129\u311d',
         'ou': '\u3121',
@@ -1516,7 +1532,7 @@ var zhongwenContent = {
         'zui': '\u3117\u3128\u311f',
         'zun': '\u3117\u3128\u3123',
         'zuo': '\u3117\u3128\u311b'
-    }
+    },
 }
 
 //Event Listeners

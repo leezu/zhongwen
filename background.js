@@ -127,6 +127,7 @@ zhongwenMain.config.fontSize = localStorage["fontSize"]
 zhongwenMain.config.skritterTLD = localStorage.skritterTLD;
 zhongwenMain.config.zhuyin = localStorage.zhuyin;
 zhongwenMain.config.grammar = localStorage.grammar;
+zhongwenMain.config.simpTrad = localStorage.simpTrad;
 
 if (localStorage['enabled'] == 1) {
    zhongwenMain.loadDictionary();

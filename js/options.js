@@ -52,6 +52,14 @@ function loadVals() {
     else {
         document.optform.grammar[0].selected = true;
     }
+
+    storedValue = localStorage['simpTrad'];
+    if(storedValue == 'auto') {
+        document.optform.simpTrad[1].selected = true;
+    }
+    else {
+        document.optform.simpTrad[0].selected = true;
+    }
 }
 
 function storeVals() {
@@ -72,6 +80,10 @@ function storeVals() {
 
     localStorage['grammar'] = document.optform.grammar.value;
     chrome.extension.getBackgroundPage().zhongwenMain.config.grammar = localStorage['grammar'];
+
+    localStorage['simpTrad'] = document.optform.simpTrad.value;
+    chrome.extension.getBackgroundPage().zhongwenMain.config.simpTrad = localStorage['simpTrad'];
+
 }
 
 $(function() {

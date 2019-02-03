@@ -50,16 +50,29 @@ function zhongwenDict() {
 
 zhongwenDict.prototype = {
 
-    wordDict: undefined,
-    wordIndex: undefined,
+    wordDict: '',
+    wordIndex: '',
 
     grammarKeywords: {},
 
-    fileRead: function(url) {
+    fileRead: function(url, callback) {
         var req = new XMLHttpRequest();
-        req.open("GET", url, false);
+        req.open("GET", url, true);
+
+        req.onload = function (e) {
+            if (req.readyState === 4) {
+                if (req.status === 200) {
+                    callback(req.responseText);
+                } else {
+                    console.error(req.statusText);
+                }
+            }
+        };
+        req.onerror = function (e) {
+            console.error(req.statusText);
+        };
+
         req.send(null);
-        return req.responseText;
     },
 
     find: function(data, text) {
@@ -83,11 +96,12 @@ zhongwenDict.prototype = {
     },
 
     loadDictionary: function() {
-        this.wordDict = this.fileRead(chrome.extension.getURL("data/cedict_ts.u8"));
-        this.wordIndex = this.fileRead(chrome.extension.getURL("data/cedict.idx"));
-
-        var grammarKeywordFile = this.fileRead(chrome.extension.getURL("data/grammarKeywordsMin.json"));
-        this.grammarKeywords = JSON.parse(grammarKeywordFile);
+        this.fileRead(chrome.extension.getURL("data/cedict_ts.u8"), function(text) { zhongwenDict.prototype.wordDict = text; });
+        this.fileRead(chrome.extension.getURL("data/cedict.idx"), function(text) { zhongwenDict.prototype.wordIndex = text; });
+        this.fileRead(chrome.extension.getURL("data/grammarKeywordsMin.json"),
+            function(text) {
+                zhongwenDict.prototype.grammarKeywords = JSON.parse(text)
+            });
     },
 
     hasKeyword: function (keyword) {
