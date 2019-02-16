@@ -1,6 +1,6 @@
 /*
- Zhongwen - A Chinese-English Popup Dictionary
- Copyright (C) 2011 Christian Schiller
+ Zhongwen - A Chinese-English Pop-Up Dictionary
+ Copyright (C) 2019 Christian Schiller
  https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
  ---
@@ -44,159 +44,96 @@
 
  */
 
-function zhongwenDict() {
-    this.loadDictionary();
-}
+'use strict';
 
-zhongwenDict.prototype = {
+class ZhongwenDictionary {
 
-    wordDict: '',
-    wordIndex: '',
+    constructor(wordDict, wordIndex, grammarKeywords) {
+        this.wordDict = wordDict;
+        this.wordIndex = wordIndex;
+        this.grammarKeywords = grammarKeywords;
+    }
 
-    grammarKeywords: {},
+    static find(needle, haystack) {
 
-    fileRead: function (url, callback) {
-        var req = new XMLHttpRequest();
-        req.open("GET", url, true);
-
-        req.onload = function (e) {
-            if (req.readyState === 4) {
-                if (req.status === 200) {
-                    callback(req.responseText);
-                } else {
-                    console.error(req.statusText);
-                }
-            }
-        };
-        req.onerror = function (e) {
-            console.error(req.statusText);
-        };
-
-        req.send(null);
-    },
-
-    find: function (data, text) {
-        const tlen = text.length;
-        var beg = 0;
-        var end = data.length - 1;
-        var i;
-        var mi;
-        var mis;
+        let beg = 0;
+        let end = haystack.length - 1;
 
         while (beg < end) {
-            mi = Math.floor((beg + end) / 2);
-            i = data.lastIndexOf('\n', mi) + 1;
+            let mi = Math.floor((beg + end) / 2);
+            let i = haystack.lastIndexOf('\n', mi) + 1;
 
-            mis = data.substr(i, tlen);
-            if (text < mis) end = i - 1;
-            else if (text > mis) beg = data.indexOf('\n', mi + 1) + 1;
-            else return data.substring(i, data.indexOf('\n', mi + 1));
+            let mis = haystack.substr(i, needle.length);
+            if (needle < mis) {
+                end = i - 1;
+            } else if (needle > mis) {
+                beg = haystack.indexOf('\n', mi + 1) + 1;
+            } else {
+                return haystack.substring(i, haystack.indexOf('\n', mi + 1));
+            }
         }
+
         return null;
-    },
+    }
 
-    loadDictionary: function () {
-        this.fileRead(chrome.extension.getURL("data/cedict_ts.u8"), function (text) {
-            zhongwenDict.prototype.wordDict = text;
-        });
-        this.fileRead(chrome.extension.getURL("data/cedict.idx"), function (text) {
-            zhongwenDict.prototype.wordIndex = text;
-        });
-        this.fileRead(chrome.extension.getURL("data/grammarKeywordsMin.json"),
-            function (text) {
-                zhongwenDict.prototype.grammarKeywords = JSON.parse(text)
-            });
-    },
-
-    hasKeyword: function (keyword) {
+    hasKeyword(keyword) {
         return this.grammarKeywords[keyword];
-    },
+    }
 
-    wordSearch: function (word, max) {
-        var entry = {};
+    wordSearch(word, max) {
 
-        var dict = this.wordDict;
-        var index = this.wordIndex;
-        var maxTrim = 7;
-        var cache = {};
-        var have = {};
-        var count = 0;
-        var maxLen = 0;
+        let entry = {data: []};
 
-        if (max != null) {
-            maxTrim = max;
-        }
+        let dict = this.wordDict;
+        let index = this.wordIndex;
 
-        entry.data = [];
+        let maxTrim = max || 7;
 
-        while (word.length > 0) {
-            var ix = cache[word];
-            if (!ix) {
-                ix = this.find(index, word + ',');
+        let cache = {};
+
+        let count = 0;
+        let maxLen = 0;
+
+        WHILE:
+            while (word.length > 0) {
+
+                let ix = cache[word];
                 if (!ix) {
-                    cache[word] = [];
-                    continue;
-                }
-                ix = ix.split(',');
-                cache[word] = ix;
-            }
-
-            for (var j = 1; j < ix.length; ++j) {
-                var offset = ix[j];
-                if (have[offset]) continue;
-
-                var dentry = dict.substring(offset, dict.indexOf('\n', offset));
-
-                if (count >= maxTrim) {
-                    entry.more = 1;
-                    break;
+                    ix = ZhongwenDictionary.find(word + ',', index);
+                    if (!ix) {
+                        cache[word] = [];
+                        continue;
+                    }
+                    ix = ix.split(',');
+                    cache[word] = ix;
                 }
 
-                have[offset] = 1;
-                ++count;
-                if (maxLen == 0) maxLen = word.length;
+                for (let j = 1; j < ix.length; ++j) {
+                    let offset = ix[j];
 
-                entry.data.push([dentry, word]);
-            } // for j < ix.length
-            if (count >= maxTrim) break;
-            word = word.substr(0, word.length - 1);
-        } // while word.length > 0
+                    let dentry = dict.substring(offset, dict.indexOf('\n', offset));
 
-        if (entry.data.length == 0) return null;
+                    if (count >= maxTrim) {
+                        entry.more = 1;
+                        break WHILE;
+                    }
 
-        entry.matchLen = maxLen;
-        return entry;
-    },
+                    ++count;
+                    if (maxLen === 0) {
+                        maxLen = word.length;
+                    }
 
-    translate: function (text) {
-        var e, o;
-        var skip;
-
-        o = {};
-        o.data = [];
-        o.textLen = text.length;
-
-        while (text.length > 0) {
-            e = this.wordSearch(text, 1);
-            if (e != null) {
-                if (o.data.length >= 7) {
-                    o.more = 1;
-                    break;
+                    entry.data.push([dentry, word]);
                 }
-                o.data.push(e.data[0]);
-                skip = e.matchLen;
-            }
-            else {
-                skip = 1;
-            }
-            text = text.substr(skip, text.length - skip);
-        }
 
-        if (o.data.length == 0) {
+                word = word.substr(0, word.length - 1);
+            }
+
+        if (entry.data.length === 0) {
             return null;
         }
 
-        o.textLen -= text.length;
-        return o;
+        entry.matchLen = maxLen;
+        return entry;
     }
-};
+}
