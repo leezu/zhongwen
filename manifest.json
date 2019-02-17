@@ -35,7 +35,8 @@
   ],
   "options_ui": {
     "page": "options.html",
-    "open_in_tab": true
+    "browser_style": true,
+    "chrome_style": true
   },
   "permissions": [
     "http://*/*",
