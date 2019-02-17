@@ -6,6 +6,9 @@ by simply hovering over them with the mouse.
 **Chrome extension:**
 https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
+**Firefox extension:**
+https://addons.mozilla.org/en-US/firefox/addon/zhongwen-chinese-english/
+
 **Github:**
 https://github.com/cschiller/zhongwen
 
@@ -34,15 +37,17 @@ https://github.com/cschiller/zhongwen
 
 ## Installation
 
-The Zhongwen Chrome extension is available via the Chrome Web Store:
+The Zhongwen extension is available as Chrome and Firefox Add-on:
 https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+https://addons.mozilla.org/en-US/firefox/addon/zhongwen-chinese-english/
 
-Simply click on the "Add to Chrome" button to start the installation.
+Simply click on the "Add to Chrome" or "Add to Firefox" button respectively
+to start the installation.
 
 
 ## How Does It Work?
 Once Zhongwen is installed on your computer you'll see a little icon showing
-the Zhongwen logo near the upper right-hand corner of your Chrome browser. By
+the Zhongwen logo near the upper right-hand corner of your browser. By
 clicking on this icon you can turn the extension on and off. Click on it and
 wait until you see the word "On" displayed in red and white on top of the icon.
 This tells you that the dictionary is active. If you want to turn it off again,
@@ -166,7 +171,7 @@ lets you quickly do that by some simple keyboard shortcuts.
 * "Alt + 6" takes you to JuKuu.
 * "t" is for looking up example sentences at Tatoeba.org
 
-Chrome will open a new tab and the word that was shown in the pop-up window
+Your browser will open a new tab and the word that was shown in the pop-up window
 will be looked up in the corresponding online dictionary listed above.
 
 
