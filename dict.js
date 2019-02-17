@@ -1,48 +1,48 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+ Zhongwen - A Chinese-English Popup Dictionary
+ Copyright (C) 2011 Christian Schiller
+ https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
-        ---
+ ---
 
-        Originally based on Rikaikun 0.8
-        Copyright (C) 2010 Erek Speed
-        http://code.google.com/p/rikaikun/
+ Originally based on Rikaikun 0.8
+ Copyright (C) 2010 Erek Speed
+ http://code.google.com/p/rikaikun/
 
-        ---
+ ---
 
-        Originally based on Rikaichan 1.07
-        by Jonathan Zarate
-        http://www.polarcloud.com/
+ Originally based on Rikaichan 1.07
+ by Jonathan Zarate
+ http://www.polarcloud.com/
 
-        ---
+ ---
 
-        Originally based on RikaiXUL 0.4 by Todd Rudick
-        http://www.rikai.com/
-        http://rikaixul.mozdev.org/
+ Originally based on RikaiXUL 0.4 by Todd Rudick
+ http://www.rikai.com/
+ http://rikaixul.mozdev.org/
 
-        ---
+ ---
 
-        This program is free software; you can redistribute it and/or modify
-        it under the terms of the GNU General Public License as published by
-        the Free Software Foundation; either version 2 of the License, or
-        (at your option) any later version.
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-        This program is distributed in the hope that it will be useful,
-        but WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-        You should have received a copy of the GNU General Public License
-        along with this program; if not, write to the Free Software
-        Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-        ---
+ ---
 
-        Please do not change or remove any of the copyrights or links to web pages
-        when modifying any of the files.
+ Please do not change or remove any of the copyrights or links to web pages
+ when modifying any of the files.
 
-*/
+ */
 
 function zhongwenDict() {
     this.loadDictionary();
@@ -55,7 +55,7 @@ zhongwenDict.prototype = {
 
     grammarKeywords: {},
 
-    fileRead: function(url, callback) {
+    fileRead: function (url, callback) {
         var req = new XMLHttpRequest();
         req.open("GET", url, true);
 
@@ -75,7 +75,7 @@ zhongwenDict.prototype = {
         req.send(null);
     },
 
-    find: function(data, text) {
+    find: function (data, text) {
         const tlen = text.length;
         var beg = 0;
         var end = data.length - 1;
@@ -95,11 +95,15 @@ zhongwenDict.prototype = {
         return null;
     },
 
-    loadDictionary: function() {
-        this.fileRead(chrome.extension.getURL("data/cedict_ts.u8"), function(text) { zhongwenDict.prototype.wordDict = text; });
-        this.fileRead(chrome.extension.getURL("data/cedict.idx"), function(text) { zhongwenDict.prototype.wordIndex = text; });
+    loadDictionary: function () {
+        this.fileRead(chrome.extension.getURL("data/cedict_ts.u8"), function (text) {
+            zhongwenDict.prototype.wordDict = text;
+        });
+        this.fileRead(chrome.extension.getURL("data/cedict.idx"), function (text) {
+            zhongwenDict.prototype.wordIndex = text;
+        });
         this.fileRead(chrome.extension.getURL("data/grammarKeywordsMin.json"),
-            function(text) {
+            function (text) {
                 zhongwenDict.prototype.grammarKeywords = JSON.parse(text)
             });
     },
@@ -107,9 +111,9 @@ zhongwenDict.prototype = {
     hasKeyword: function (keyword) {
         return this.grammarKeywords[keyword];
     },
-    
-    wordSearch: function(word, max) {
-        var entry = { };
+
+    wordSearch: function (word, max) {
+        var entry = {};
 
         var dict = this.wordDict;
         var index = this.wordIndex;
@@ -119,7 +123,7 @@ zhongwenDict.prototype = {
         var count = 0;
         var maxLen = 0;
 
-        if (max != null){
+        if (max != null) {
             maxTrim = max;
         }
 
@@ -164,7 +168,7 @@ zhongwenDict.prototype = {
         return entry;
     },
 
-    translate: function(text) {
+    translate: function (text) {
         var e, o;
         var skip;
 

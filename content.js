@@ -1,46 +1,46 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2011 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+ Zhongwen - A Chinese-English Popup Dictionary
+ Copyright (C) 2011 Christian Schiller
+ https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
 
-        ---
+ ---
 
-        Originally based on Rikaikun 0.8
-        Copyright (C) 2010 Erek Speed
-        http://code.google.com/p/rikaikun/
+ Originally based on Rikaikun 0.8
+ Copyright (C) 2010 Erek Speed
+ http://code.google.com/p/rikaikun/
 
-        ---
+ ---
 
-        Originally based on Rikaichan 1.07
-        by Jonathan Zarate
-        http://www.polarcloud.com/
+ Originally based on Rikaichan 1.07
+ by Jonathan Zarate
+ http://www.polarcloud.com/
 
-        ---
+ ---
 
-        Originally based on RikaiXUL 0.4 by Todd Rudick
-        http://www.rikai.com/
-        http://rikaixul.mozdev.org/
+ Originally based on RikaiXUL 0.4 by Todd Rudick
+ http://www.rikai.com/
+ http://rikaixul.mozdev.org/
 
-        ---
+ ---
 
-        This program is free software; you can redistribute it and/or modify
-        it under the terms of the GNU General Public License as published by
-        the Free Software Foundation; either version 2 of the License, or
-        (at your option) any later version.
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-        This program is distributed in the hope that it will be useful,
-        but WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-        You should have received a copy of the GNU General Public License
-        along with this program; if not, write to the Free Software
-        Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-        ---
+ ---
 
-        Please do not change or remove any of the copyrights or links to web pages
-        when modifying any of the files.
+ Please do not change or remove any of the copyrights or links to web pages
+ when modifying any of the files.
 
  */
 
@@ -53,12 +53,12 @@ var zhongwenContent = {
     keysDown: [],
 
     // Hack because SelEnd can't be sent in messages
-    lastSelEnd:  [],
+    lastSelEnd: [],
     // Hack because ro was coming out always 0 for some reason.
     lastRo: 0,
 
     //Adds the listeners and stuff.
-    enableTab: function() {
+    enableTab: function () {
         if (!window.zhongwen) {
             window.zhongwen = {};
             document.addEventListener('mousemove', this.onMouseMove);
@@ -67,8 +67,8 @@ var zhongwenContent = {
             document.addEventListener('DOMNodeInserted', this.onDOMNodeInserted)
         }
     },
-    
-    onDOMNodeInserted: function(ev) {
+
+    onDOMNodeInserted: function (ev) {
         if (ev.target.nodeName == 'IFRAME') {
             chrome.extension.sendRequest({
                 "type": "iframe"
@@ -77,7 +77,7 @@ var zhongwenContent = {
     },
 
     //Removes the listeners and stuff
-    disableTab: function() {
+    disableTab: function () {
         if (window.zhongwen) {
             var e;
             document.removeEventListener('mousemove', this.onMouseMove);
@@ -95,10 +95,10 @@ var zhongwenContent = {
         }
     },
 
-    getContentType: function(tDoc) {
+    getContentType: function (tDoc) {
         var m = tDoc.getElementsByTagName('meta');
-        for(var i in m) {
-            if(m[i].httpEquiv == 'Content-Type') {
+        for (var i in m) {
+            if (m[i].httpEquiv == 'Content-Type') {
                 var con = m[i].content;
                 con = con.split(';');
                 return con[0];
@@ -107,7 +107,7 @@ var zhongwenContent = {
         return null;
     },
 
-    showPopup: function(text, elem, x, y, looseWidth) {
+    showPopup: function (text, elem, x, y, looseWidth) {
         var topdoc = window.document;
 
         if (!x || !y) x = y = 0;
@@ -240,7 +240,7 @@ var zhongwenContent = {
         }
     },
 
-    hidePopup: function() {
+    hidePopup: function () {
         var popup = document.getElementById('zhongwen-window');
         if (popup) {
             popup.style.display = 'none';
@@ -248,12 +248,12 @@ var zhongwenContent = {
         }
     },
 
-    isVisible: function() {
+    isVisible: function () {
         var popup = document.getElementById('zhongwen-window');
         return (popup) && (popup.style.display != 'none');
     },
 
-    clearHi: function() {
+    clearHi: function () {
         var tdata = window.zhongwen;
         if ((!tdata) || (!tdata.prevSelView)) return;
         if (tdata.prevSelView.closed) {
@@ -269,10 +269,10 @@ var zhongwenContent = {
         tdata.selText = null;
     },
 
-    onKeyDown: function(ev) {
+    onKeyDown: function (ev) {
         zhongwenContent._onKeyDown(ev)
     },
-    _onKeyDown: function(ev) {
+    _onKeyDown: function (ev) {
 
         if (ev.ctrlKey || ev.metaKey) {
             return;
@@ -361,7 +361,7 @@ var zhongwenContent = {
                 break;
 
             case 82:        // r
-                
+
                 var entries = [];
                 for (var j = 0; j < this.lastFound.length; j++) {
                     var entry = {};
@@ -371,32 +371,32 @@ var zhongwenContent = {
                     entry.definition = this.lastFound[j][3];
                     entries.push(entry);
                 }
-                
+
                 chrome.extension.sendRequest({
                     "type": "add",
                     "entries": entries
                 });
-                
+
                 this.showPopup("Added to word list.<p>Press Alt+W to open word list.", null, -1, -1);
 
                 break;
-                
+
             case 83:        // s
                 if (this.isVisible()) {
 
                     // http://www.skritter.com/vocab/api/add?from=Chrome&lang=zh&word=浏览&trad=瀏 覽&rdng=liú lǎn&defn=to skim over; to browse
-                
+
                     var skritter = 'http://legacy.skritter.com';
                     if (window.zhongwen.config.skritterTLD == 'cn') {
                         skritter = 'http://legacy.skritter.cn';
                     }
 
                     skritter +=
-                    '/vocab/api/add?from=Zhongwen&siteref=Zhongwen&lang=zh&word=' +
-                    encodeURIComponent(this.lastFound[0][0]) +
-                    '&trad=' + encodeURIComponent(this.lastFound[0][1]) +
-                    '&rdng=' + encodeURIComponent(this.lastFound[0][4]) +
-                    '&defn=' + encodeURIComponent(this.lastFound[0][3]);
+                        '/vocab/api/add?from=Zhongwen&siteref=Zhongwen&lang=zh&word=' +
+                        encodeURIComponent(this.lastFound[0][0]) +
+                        '&trad=' + encodeURIComponent(this.lastFound[0][1]) +
+                        '&rdng=' + encodeURIComponent(this.lastFound[0][4]) +
+                        '&defn=' + encodeURIComponent(this.lastFound[0][3]);
 
                     chrome.extension.sendRequest({
                         type: 'open',
@@ -543,7 +543,7 @@ var zhongwenContent = {
 
     },
 
-    getTexts: function() {
+    getTexts: function () {
         var result = '';
         for (var i = 0; i < this.lastFound.length; i++) {
             result += this.lastFound[i].slice(0, -1).join('\t');
@@ -552,11 +552,11 @@ var zhongwenContent = {
         return result;
     },
 
-    onKeyUp: function(ev) {
+    onKeyUp: function (ev) {
         if (zhongwenContent.keysDown[ev.keyCode]) zhongwenContent.keysDown[ev.keyCode] = 0;
     },
 
-    unicodeInfo: function(c) {
+    unicodeInfo: function (c) {
         var hex = '0123456789ABCDEF';
         var u = c.charCodeAt(0);
         return c + ' U' + hex[(u >>> 12) & 15] + hex[(u >>> 8) & 15] + hex[(u >>> 4) & 15] + hex[u & 15];
@@ -594,10 +594,10 @@ var zhongwenContent = {
 
         endIndex = Math.min(rangeParent.data.length, offset + maxLength);
         text += rangeParent.data.substring(offset, endIndex);
-        selEndList.push( {
+        selEndList.push({
             node: rangeParent,
             offset: endIndex
-        } );
+        });
 
         var nextNode = rangeParent;
         while (((nextNode = this.findNextTextNode(nextNode.parentNode, nextNode)) != null) && (text.length < maxLength)) {
@@ -607,7 +607,7 @@ var zhongwenContent = {
         return text;
     },
 
-    show: function(tdata, backwards) {
+    show: function (tdata, backwards) {
 
         var rp = tdata.prevRangeNode;
         var ro = tdata.prevRangeOfs + tdata.uofs;
@@ -643,10 +643,10 @@ var zhongwenContent = {
 
         if ((isNaN(u)) ||
             ((u != 0x25CB) &&
-                ((u < 0x3400) || (u > 0x9FFF)) &&
-                ((u < 0xF900) || (u > 0xFAFF)) &&
-                ((u < 0xFF21) || (u > 0xFF3A)) &&
-                ((u < 0xFF41) || (u > 0xFF5A)))) {
+            ((u < 0x3400) || (u > 0x9FFF)) &&
+            ((u < 0xF900) || (u > 0xFAFF)) &&
+            ((u < 0xFF21) || (u > 0xFF3A)) &&
+            ((u < 0xFF41) || (u > 0xFF5A)))) {
             this.clearHi();
             this.hidePopup();
             return 3;
@@ -659,16 +659,16 @@ var zhongwenContent = {
         lastSelEnd = selEndList;
         lastRo = ro;
         chrome.extension.sendRequest({
-            "type": "search",
-            "text": text
-        },
-        zhongwenContent.processEntry);
+                "type": "search",
+                "text": text
+            },
+            zhongwenContent.processEntry);
 
         return 0;
 
     },
 
-    processEntry: function(e) {
+    processEntry: function (e) {
 
         var tdata = window.zhongwen;
 
@@ -702,13 +702,13 @@ var zhongwenContent = {
         zhongwenContent.processHtml(zhongwenContent.makeHtml(e, window.zhongwen.config.tonecolors != 'no'));
     },
 
-    processHtml: function(html) {
+    processHtml: function (html) {
         var tdata = window.zhongwen;
         zhongwenContent.showPopup(html, tdata.prevTarget, tdata.popX, tdata.popY, false);
         return 1;
     },
 
-    debugObject: function(name, obj) {
+    debugObject: function (name, obj) {
         var debugstr = name + '=\n';
         for (var prop in obj) {
             if (obj.hasOwnProperty(prop)) {
@@ -742,16 +742,16 @@ var zhongwenContent = {
         tdata.selText = sel.toString();
     },
 
-    getFirstTextChild: function(node) {
+    getFirstTextChild: function (node) {
         var nodeIterator = document.createNodeIterator(node, NodeFilter.SHOW_TEXT, null);
         return nodeIterator.nextNode();
     },
 
-    makeDiv: function(input) {
+    makeDiv: function (input) {
         var div = document.createElement('div');
-        
+
         div.id = '_zhongwenDiv';
-        
+
         var text;
         if (input.value) {
             text = input.value;
@@ -769,43 +769,42 @@ var zhongwenContent = {
         div.style.position = "absolute";
         div.style.zIndex = 7000;
         $(div).offset({
-            top: $(input).offset().top, 
+            top: $(input).offset().top,
             left: $(input).offset().left
         })
-		
+
         return div;
     },
 
-    onMouseMove:
-    function(ev) {
+    onMouseMove: function (ev) {
         zhongwenContent._onMouseMove(ev);
     },
-    _onMouseMove: function(ev) {
+    _onMouseMove: function (ev) {
         var tdata = window.zhongwen;        // per-tab data
 
-        if(ev.target.nodeName == 'TEXTAREA' || ev.target.nodeName == 'INPUT'
+        if (ev.target.nodeName == 'TEXTAREA' || ev.target.nodeName == 'INPUT'
             || ev.target.nodeName == 'DIV' || ev.target.nodeName == 'IFRAME') {
 
             var div = document.getElementById('_zhongwenDiv');
 
             if (ev.altKey) {
-                
+
                 if (!div && (ev.target.nodeName == 'TEXTAREA' || ev.target.nodeName == 'INPUT' ||
                     ev.target.nodeName == 'IFRAME')) {
-                
+
                     div = zhongwenContent.makeDiv(ev.target);
                     document.body.appendChild(div);
                     div.scrollTop = ev.target.scrollTop;
                     div.scrollLeft = ev.target.scrollLeft;
-                
+
                 }
-                
+
             } else {
-                
+
                 if (div) {
                     document.body.removeChild(div);
                 }
-                
+
             }
 
         }
@@ -832,19 +831,19 @@ var zhongwenContent = {
             tdata.timer = null;
         }
 
-        if((rp.data) && ro == rp.data.length) {
+        if ((rp.data) && ro == rp.data.length) {
             rp = this.findNextTextNode(rp.parentNode, rp);
             ro = 0;
         }
-        
+
         // The case where the text before div is empty.
-        if(rp && rp.parentNode != ev.target) {
+        if (rp && rp.parentNode != ev.target) {
             rp = zhongwenContent.findNextTextNode(rp.parentNode, rp);
-            ro=0;
+            ro = 0;
         }
 
         // Otherwise, we're off in nowhere land and we should go home.
-        else if(!(rp) || ((rp.parentNode != ev.target))){
+        else if (!(rp) || ((rp.parentNode != ev.target))) {
             rp = null;
             ro = -1;
 
@@ -860,7 +859,7 @@ var zhongwenContent = {
             tdata.popX = ev.clientX;
             tdata.popY = ev.clientY;
             tdata.timer = setTimeout(
-                function() {
+                function () {
                     zhongwenContent.show(tdata);
                 }, 50);
             return;
@@ -877,7 +876,7 @@ var zhongwenContent = {
         }
     },
 
-    findNextTextNode : function(root, previous) {
+    findNextTextNode: function (root, previous) {
         if (root == null) {
             return null;
         }
@@ -897,7 +896,7 @@ var zhongwenContent = {
         }
     },
 
-    findPreviousTextNode : function(root, previous) {
+    findPreviousTextNode: function (root, previous) {
         if (root == null) {
             return null;
         }
@@ -918,7 +917,7 @@ var zhongwenContent = {
         }
     },
 
-    copyToClipboard : function(data) {
+    copyToClipboard: function (data) {
         chrome.extension.sendRequest({
             "type": "copy",
             "data": data
@@ -927,7 +926,7 @@ var zhongwenContent = {
         this.showPopup("Copied to clipboard", null, -1, -1);
     },
 
-    makeHtml: function(entry, showToneColors) {
+    makeHtml: function (entry, showToneColors) {
 
         var e;
         var word;
@@ -1007,28 +1006,28 @@ var zhongwenContent = {
         return html;
     },
 
-    tones : {
-        1 : '&#772;',
-        2 : '&#769;',
+    tones: {
+        1: '&#772;',
+        2: '&#769;',
         3: '&#780;',
         4: '&#768;',
         5: ''
     },
 
-    utones : {
-        1 : '\u0304',
-        2 : '\u0301',
-        3 : '\u030C',
-        4 : '\u0300',
+    utones: {
+        1: '\u0304',
+        2: '\u0301',
+        3: '\u030C',
+        4: '\u0300',
         5: ''
     },
 
-    parse: function(s) {
+    parse: function (s) {
         var m = s.match(/([^AEIOU:aeiou:]*)([AEIOUaeiou:]+)([^aeiou:]*)([1-5])/);
         return m;
     },
 
-    tonify: function(vowels, tone) {
+    tonify: function (vowels, tone) {
         var html = '';
         var text = '';
 
@@ -1058,21 +1057,21 @@ var zhongwenContent = {
         return [html, text];
     },
 
-    pinyinAndZhuyin: function(syllables, showToneColors, pinyinClass) {
+    pinyinAndZhuyin: function (syllables, showToneColors, pinyinClass) {
         var text = '';
         var html = ''
         var zhuyin = '';
         var a = syllables.split(/[\s·]+/);
         for (var i = 0; i < a.length; i++) {
             var syllable = a[i];
-            
+
             // ',' in pinyin
             if (syllable == ',') {
                 html += ' ,';
                 text += ' ,';
                 continue;
             }
-            
+
             if (i > 0) {
                 html += '&nbsp;';
                 text += ' ';
@@ -1106,22 +1105,22 @@ var zhongwenContent = {
             html += m[1] + t[0] + m[3];
             html += '</span>';
             text += m[1] + t[1] + m[3];
-            
+
             var zhuyinClass = 'w-zhuyin';
             if (window.zhongwen.config.fontSize == 'small') {
                 zhuyinClass += '-small';
             }
-            
-            zhuyin += '<span class="tone' + m[4] + ' ' + zhuyinClass + '">' 
-            + this.zhuyinMap[syllable.substring(0, syllable.length -1).toLowerCase()] 
-            + this.zhuyinTones[syllable[syllable.length - 1]] + '</span>'
+
+            zhuyin += '<span class="tone' + m[4] + ' ' + zhuyinClass + '">'
+                + this.zhuyinMap[syllable.substring(0, syllable.length - 1).toLowerCase()]
+                + this.zhuyinTones[syllable[syllable.length - 1]] + '</span>'
         }
         return [html, text, zhuyin]
     },
-    
-    zhuyinTones : ['?', '', '\u02CA', '\u02C7', '\u02CB', '\u30FB'],
 
-    zhuyinMap : {
+    zhuyinTones: ['?', '', '\u02CA', '\u02C7', '\u02CB', '\u30FB'],
+
+    zhuyinMap: {
         'a': '\u311a',
         'ai': '\u311e',
         'an': '\u3122',
@@ -1537,8 +1536,8 @@ var zhongwenContent = {
 
 //Event Listeners
 chrome.extension.onRequest.addListener(
-    function(request, sender, sendResponse) {
-        switch(request.type) {
+    function (request, sender, sendResponse) {
+        switch (request.type) {
             case 'enable':
                 zhongwenContent.enableTab();
                 window.zhongwen.config = request.config;
@@ -1547,14 +1546,14 @@ chrome.extension.onRequest.addListener(
                 zhongwenContent.disableTab();
                 break;
             case 'showPopup':
-                if (!request.isHelp || window == window.top) { 
+                if (!request.isHelp || window == window.top) {
                     zhongwenContent.showPopup(request.text);
                 }
                 break;
             default:
         }
     }
-    );
+);
 
 // When a page first loads, checks to see if it should enable script
 chrome.extension.sendRequest({

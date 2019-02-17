@@ -1,20 +1,20 @@
 /*
-        Zhongwen - A Chinese-English Popup Dictionary
-        Copyright (C) 2012 Christian Schiller
-        https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
-*/
+ Zhongwen - A Chinese-English Popup Dictionary
+ Copyright (C) 2012 Christian Schiller
+ https://chrome.google.com/extensions/detail/kkmlkkjojmombglmlpbpapmhcaljjkde
+ */
 
 function loadVals() {
     var storedValue = localStorage['popupcolor'];
     for (var i = 0; i < document.optform.popupcolor.length; i++) {
-        if(document.optform.popupcolor[i].value == storedValue) {
+        if (document.optform.popupcolor[i].value == storedValue) {
             document.optform.popupcolor[i].selected = true;
             break;
         }
     }
 
     storedValue = localStorage['tonecolors'];
-    if(storedValue == 'no') {
+    if (storedValue == 'no') {
         document.optform.tonecolors[1].selected = true;
     }
     else {
@@ -22,7 +22,7 @@ function loadVals() {
     }
 
     storedValue = localStorage['fontSize'];
-    if(storedValue == 'small') {
+    if (storedValue == 'small') {
         document.optform.fontSize[1].selected = true;
     }
     else {
@@ -30,15 +30,15 @@ function loadVals() {
     }
 
     storedValue = localStorage['skritterTLD'];
-    if(storedValue == 'cn') {
+    if (storedValue == 'cn') {
         document.optform.skritterTLD[1].selected = true;
     }
     else {
         document.optform.skritterTLD[0].selected = true;
     }
-        
+
     storedValue = localStorage['zhuyin'];
-    if(storedValue == 'yes') {
+    if (storedValue == 'yes') {
         document.optform.zhuyin[1].selected = true;
     }
     else {
@@ -46,7 +46,7 @@ function loadVals() {
     }
 
     storedValue = localStorage['grammar'];
-    if(storedValue == 'no') {
+    if (storedValue == 'no') {
         document.optform.grammar[1].selected = true;
     }
     else {
@@ -54,7 +54,7 @@ function loadVals() {
     }
 
     storedValue = localStorage['simpTrad'];
-    if(storedValue == 'auto') {
+    if (storedValue == 'auto') {
         document.optform.simpTrad[1].selected = true;
     }
     else {
@@ -86,7 +86,7 @@ function storeVals() {
 
 }
 
-$(function() {
+$(function () {
     $('#save').click(storeVals);
 });
 
