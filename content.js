@@ -963,7 +963,7 @@ var zhongwenContent = {
                     hanziClass += '-small';
                 }
                 var hanziSpan = document.createElement('span');
-                hanziSpan.textContent = e[2];
+                hanziSpan.textContent = word;
                 hanziSpan.className = hanziClass;
                 fragment.appendChild(hanziSpan);
 
